@@ -27,15 +27,24 @@ letters #built-in R vector
 1:5 #list the numbers 1-5
 #[1] 1 2 3 4 5
 
-letters[1:5] #creates a subset of vectors 1-5 within letters
+letters[1:5] 
+#creates a subset of vectors 1-5 within letters
 #> letters[1:5]
 #[1] "a" "b" "c" "d" "e"
+
 x <- 1:26 # saves the numbers 1-26 
 x
 #[1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 
+x < 10 #gives us a list of the values in the vector that are less than 10
+#[1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+#[14] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#so, you can see that values 1-9 are (obviously) less than 10 for the value returned is TRUE
+#but values 10-26 are greater than 10 therefore the return is FALSE
 
-
+letters[x < 10]
+#> letters[x < 10]
+#[1] "a" "b" "c" "d" "e" "f" "g" "h" "i"
 
 
 
