@@ -20,6 +20,22 @@ vector.maths
 #[1]  4.5 13.5 22.5 13.5
 
 ####Vector Subsetting
+letters #built-in R vector
+#[1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t"
+#[21] "u" "v" "w" "x" "y" "z"
+
+1:5 #list the numbers 1-5
+#[1] 1 2 3 4 5
+
+letters[1:5] #creates a subset of vectors 1-5 within letters
+#> letters[1:5]
+#[1] "a" "b" "c" "d" "e"
+x <- 1:26 # saves the numbers 1-26 
+x
+#[1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+
+
+
 
 
 
