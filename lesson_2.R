@@ -132,6 +132,25 @@ changed
 unchanged
       #[1] "a" "c" "e"
 
+#Advanced Looping 2.3
+#sometimes you need to BREAK out of a loop!!!!
+#maybe this is because you have achieved the result that you were looking to achieve
+
+#example
+
+value <- 0 #1 >value #[1] 0; assigns value as zero
+max.iter <- 1000 #2 >max.iter #[1] 1000; assigns max.iter as 1000
+goal <- 2 #3 >goal [1] 2; goal is now assigned as 2
+for (i in 1:max.iter){ #4 for the index i in 1 through the max iterations (1000); #10 #draw at most 1000 times until we find a number greater that 2
+  value <- rnorm(1) #5 draw a random number from a distribution centered at zero
+  if(value > goal){ #6 we want to stop (BREAK out of the loop) once we get above 2
+    break #7 R knows once it sees this to immediately break out of the loop its in and continue with the script
+  } #8
+} #9
+if (i == max.iter){ 
+  stop("Max iteration reached!") #11
+} #12
+
 
 
   
