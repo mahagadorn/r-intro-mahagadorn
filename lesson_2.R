@@ -205,6 +205,40 @@ for(i in 1:100){
 }
 #return [1] 2.685955, [1] 2.448723
 
+#Functions 2.4
+#function() tells R that we are defining a new function
+#functions make it easy to reuse your code
+
+#this is where we actually write the function (here called double)
+double <- function(x){ 
+  doubled <- x * 2 #this is what we are saving the value as??? maybe???
+  return(doubled) #is the way that we kill a function and its last "dying breath" is the return
+}
+double(16) #16 is the value, that we actually want to double
+#return is [1] 32
+
+#lets play around with the values (x) that we are inputting into our function
+
+double(100) #return: [1] 200
+double(4) #return: [1] 8
+double(25) #return: [1] 50
+
+#call-by-value
+#remember that what happens to objects in the function, stays in the function
+#in other words if we have "x" as a variable in the function and the global environment
+#what happens to x in the function won't save as "x" outside of the function
+
+#here is a way of looking at it
+x <- 4
+double <- function (x){
+  x <- x * 2
+  return(x)
+}
+double(x)
+print(x)
+#COOL! so we can see the above principles spelled out here
+#so, even after we double x (return: 8) the x value is left unaltered (4)
+
 
 
 
