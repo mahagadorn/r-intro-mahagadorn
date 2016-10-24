@@ -264,7 +264,26 @@ change.text <- function(text, person=c("will","mum")){
 }
 
 change.text("hi") #default the first element [1] "will says hi"
+change.text("hi", "will") #[1] "will says hi"
+change.text("hi","dave") # Error in match.arg(person) : 'arg' should be one of “will”, “mum” 
+#ERROR because the wrong arguments are being used
+
+
+#Invisible Return
+bond.james.bond <- function(x) invisible(x)
+felix.leiter <- function(x) return(x)
+bond.james.bond(10)
+print(secret)
+felix.leiter(10) #only this value is returned
 
 
 
+
+
+
+#Exercises 2.6
+#1)
+for(i in 20:10){ #specified the number range
+  print(i) #tells it to print
+}
 
