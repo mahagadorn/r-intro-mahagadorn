@@ -240,6 +240,22 @@ print(x)
 #so, even after we double x (return: 8) the x value is left unaltered (4)
 
 
+#Arguments and Invisibility 2.5
+#when calling a function we can provide specific values for the arguments of the function using their names, position, or with defaults
+
+change.text <- function(text, before="Will says", after="", upper=FALSE){
+  text <- paste(before, text, after)
+  if(upper)
+    text <-toupper(text)
+  return(text)
+}
+
+#making use of default
+change.text("brush your teeth") #[1] "Will says brush your teeth" #default for all others but text
+change.text("brush your teeth", "Will's mum says")
+
+
+
 
 
 
