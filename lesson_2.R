@@ -152,6 +152,61 @@ if (i == max.iter){
 } #12
 
 
+value <- 0 
+max.iter <- 1000
+goal <- 20 
+for (i in 1:max.iter){ 
+  if(value > goal){ 
+    break 
+  }
+}
+if (i == max.iter){ 
+  stop("Max iteration reached!")
+}
+#Error: Max iteration reached!
+#AWESOME-->once we increase the goal to 20 aka find a number greater than 20 we reach max iterations  
+  
+value <- 3 
+max.iter <- 1000
+goal <- 20 
+for (i in 1:max.iter){ 
+  if(value > goal){ 
+    break 
+  }
+}
+if (i == max.iter){ 
+  stop("Max iteration reached!")
+}
 
-  
-  
+#next loop
+#allows you to skip one iteration of a loop and move straight on to the next one
+
+value <- 0
+threshold <- 0 #threshold for the values
+for(i in 1:10){
+  value <- rnorm(1)
+  if(value <= threshold){
+    next #skip to next itertion
+  }
+  print(value) #print only those values that are above the threshold 0
+}
+#return [1] 0.7565825, [1] 0.8709817, [1] 0.737181, [1] 1.384293
+
+
+#lets see what happens if we increase threshold to 2 an increase the index
+value <- 0
+threshold <- 2 #threshold for the values
+for(i in 1:100){
+  value <- rnorm(1)
+  if(value <= threshold){
+    next #skip to next itertion
+  }
+  print(value) #print only those values that are above the threshold 0
+}
+#return [1] 2.685955, [1] 2.448723
+
+
+
+
+
+
