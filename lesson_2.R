@@ -96,7 +96,43 @@ for(i in 1:10){ #"i" is nothing but an index, really this can be anything as lon
   print(i)
 }
   #will return the values 1-10
-  
-  
+
+#not best to loop directly over the vector of interests
+#loop indices should be used
+#this essentially means that you will loop over the indices not over the values
+
+#example of not the best way to do it but okay
+for(each in letters){  #notice how its calling the letters vector values directly
+  print(each)
+}
+#this will list all the elements of the vector letters
+
+#BUT HERE IS THE BETTER WAY TO DO THIS 
+for(i in 1:length(letters)){ #i is the index
+  print(letters[i])
+}
+
+#example of a potential issue with not having the index
+
+#bad form
+unchanged <- changed <- c("a","c", "e") 
+for (each in changed) { #no index is used here
+  each <- toupper (each)
+}
+identical(changed, unchanged) #return is TRUE; therefore, no change has happened
+
+
+for (i in 1:length(changed)){
+  changed[i] <- toupper(changed[i])
+}
+identical(changed,unchanged) #return is false, therefore a change has happened
+#here is the proof
+changed 
+      #[1] "A" "C" "E" compared to...
+unchanged
+      #[1] "a" "c" "e"
+
+
+
   
   
