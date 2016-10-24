@@ -252,10 +252,18 @@ change.text <- function(text, before="Will says", after="", upper=FALSE){
 
 #making use of default
 change.text("brush your teeth") #[1] "Will says brush your teeth" #default for all others but text
-change.text("brush your teeth", "Will's mum says")
+change.text("brush your teeth", "Will's mum says") #[1] "Will's mum says brush your teeth "
+change.text("ALRIGHT MUM", upper=TRUE) #[1] "WILL SAYS ALRIGHT MUM "
 
 
+#match.arg specifies that arguments can only be one of several options
+change.text <- function(text, person=c("will","mum")){
+  person <- match.arg(person)
+  text <- paste(person, "says", text)
+  return(text)
+}
 
+change.text("hi") #default the first element [1] "will says hi"
 
 
 
