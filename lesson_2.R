@@ -61,6 +61,42 @@ if(value < 5){
 #else conditions were met therefore the block was executed
 
 #dont necessarily need the brackets
-value <-
+value <- 5
+if (value < 5)
+  print("Less than five!")
+#no print return
+value <- 4
+if (value < 5)
+  print("Less than five!")
+#4 is less than 5; therefore, the text less than five is printed
 
+#Loops 2.2
+#sometimes we want a computer to do something repeatedly for us until we are satisfied with a particular result
+value <- 0
+while(value <= 10){
+  value <- value + 1
+}
+print("Finished!")
+#[1] "Finished!"
 
+#this loop continuously executes a block of code with a ingle instruction until the condition is NO LONGER SATIFIED
+#for this example the code will continuously be executed until the value is 11
+#this is because 11 is greater than 10 and this is the first time this happens in our loop
+
+#MAH DO NOT RUN THE FOLLOWING CODE BECAUSE ITS AN INFINITE LOOP
+#value <- 0
+#while(value <= 10){
+#  value <- value - 1
+#}
+#print("Finished!")
+
+#Instead of the while loop, some prefer the for loops whenever possible
+
+for(i in 1:10){ #"i" is nothing but an index, really this can be anything as long as you call it appropriately, however, "i" is the conventional
+  print(i)
+}
+  #will return the values 1-10
+  
+  
+  
+  
