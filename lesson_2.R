@@ -287,3 +287,46 @@ for(i in 20:10){ #specified the number range
   print(i) #tells it to print
 }
 
+#2)
+for(i in 20:10){ #saying for all numbers between 20 and 10
+  if(i %% 2){ #modulus special operator; line says "when value of i has a remainder of zero when divided by 2, then we enter the if statment
+  next
+}
+  (print(i))
+}
+#%% is a modulus or binary special operator token. This is used as an arithmetic token. 
+#here the %% what gives us the "even" numbers
+
+#3)
+PrimeFun <- function(n) {
+   x <- n/1:n==n%/%1:n
+  for(x in 1:x) {
+    } if (sum(x)==2) { 
+      print("PrimeNumber!") 
+      } break {
+  } else {
+      print("NotPrime")
+  }  
+}
+  
+ #together this is looking at all the numbers from 1 through n;asking does some number divide by 1 through itself equal the quotient of the same number (one through the same number)
+x=5
+x <- ((n/1:n)==(n%/%1:n))
+  if (sum(x)==2) {
+    print("PrimeNumber!")
+    break 
+  } else {
+    print("NotPrime")
+  }
+   
+
+
+
+
+
+
+
+
+
+
+
