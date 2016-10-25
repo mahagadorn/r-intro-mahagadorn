@@ -298,35 +298,78 @@ for(i in 20:10){ #saying for all numbers between 20 and 10
 #here the %% what gives us the "even" numbers
 
 #3)
-PrimeFun <- function(n) {
-   x <- n/1:n==n%/%1:n
-  for(x in 1:x) {
-    } if (sum(x)==2) { 
-      print("PrimeNumber!") 
-      } break {
-  } else {
-      print("NotPrime")
-  }  
-}
-  
- #together this is looking at all the numbers from 1 through n;asking does some number divide by 1 through itself equal the quotient of the same number (one through the same number)
-x=5
-x <- ((n/1:n)==(n%/%1:n))
-  if (sum(x)==2) {
-    print("PrimeNumber!")
-    break 
-  } else {
-    print("NotPrime")
+isPN.fun <- function(x){ 
+  for(i in (x-1):2){  #translation: some number(index) in the range of (x-1) all the way to 2---so if x is 5 it's 5-1:2 or 4,3,2
+    remd <- x %% i    #store the remainders of x divided by the index
+  if(remd == 0){      #if the remainder is 0 its not a prime number; prime number= divisible by itself and one. So x-1 (aka one less than itself) to 2 (so not one); if either of these returns a 0 that means it's divisible by more than itself and one
+    return(FALSE)
+    }  
   }
-   
+  return(TRUE)
+}
+
+isPN.fun(7)
+isPN.fun(8)
+
+#4) Write a loop that prints out the numbers from 1 to 20, printing “Good: NUMBER” if the number is
+#divisible by five and “Job: NUMBER” if then number is prime, and nothing otherwise.
+
+#first write a function that does divisibility by five
+d5.fun <- function(x){
+  if (x %% 5 == 0) {
+    return(TRUE)
+  }else{
+    return(FALSE)
+  }
+}
+
+#function for prime numbers already written "isPN.fun()"
+
+for(i in 1:20){
+  if(d5.fun(i)){
+    print(c("Good", i))
+  } else if (isPN.fun(i)){
+    print(c("Job", i))
+  }
+}
+
+#error message: Error in if (remd == 0) { : missing value where TRUE/FALSE needed
+#first part workds...something is wrong with the prime number function
 
 
+#5)
+#A biologist is modelling population growth using a Gompertz curve, which is defined as y(t) = a.e−b.e−c.t
+#where y is population size, t is time, a and b are parameters, and e is the exponential function. Write
+#them a function that calculates population size at any time for any values of its parameters.
 
+#y=population size
+#t=time
+#a&b=parameters
+#exponetial function
 
+#pseudo-code
+#popsize.fun <- function(x){
+#startloop(input the equation here: translated--y(of time) equal to a times exponential function containing -b times exponential function containing -c times time factor)
+#equation would look like this (y(t) <- a*exp(-b*exp(-c*t)))
 
+#}
+popsize.fun <- function(a,b,c,t,...){ #these are our arguments
+  if(y <- a*exp(-b*(exp(-c*t))))    #e is exponential = exp() 
+    return(y)
+}
 
+#example for random numbers
 
+popsize.fun(a=1,b=2,c=3,t=50)
+#> popsize.fun(a=1,b=2,c=3,t=50)
+#[1] 1
 
+#changing numbers to make sure it works
+popsize.fun(a=10,b=5,c=11,t=100)
+#> popsize.fun(a=10,b=5,c=11,t=100)
+#[1] 10
+
+######holy cow it works! remember the way you thought this out for the next one.
 
 
 
