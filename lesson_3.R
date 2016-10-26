@@ -174,16 +174,21 @@ print.mammal(dexter, brian)
 ## Exercises ###################################
 ################################################
 
-#1
+#1) Implement a cat class, complete with race and print methods.
 #First step: write a function that will make cat a class
-new.cat <- function(length, weight, breed){
-  output <- list(length=length, weight=weight, breed=breed)
-  class(output) <- "cat"
-  return(output)
+new.cat <- function(color, weight, breed){       #these are the slots
+  output <- list(color=color, weight=weight, breed=breed)  #saying we want the output to be a list
+  class(output) <- "cat"  #for this our output is going to be the specific cat (incidence of class cat)
+  return(output)    #return just gives us the output 
 }
 
+#here are our incidences
+tonks <- new.cat(color = "EtBr Orange", weight = 40, breed = "mixed")  #opposite of usual. need cat name first <- new.cat
+darwin <- new.cat(color = "Gray", weight = 50, breed = "tuxedo")
+
+#write a function for race
 race.fun <- function(first, second){      #first and second are cat names (object names)
-  if(!inherits(first, "cat") | !inherits(second, "cat"))
+  if(!inherits(first, "cat") | !inherits(second, "cat"))    
     stop("You haven't given me two cats!")
   if(first$weight < second$weight){
     print("First cat won!")
@@ -193,22 +198,37 @@ race.fun <- function(first, second){      #first and second are cat names (objec
   return(second)
 }
 
-tonks <- new.cat(length = 60, weight = 40, breed = "mixed")  #opposite of usual. need cat name first <- new.cat
-darwin <- new.cat(length = 55, weight = 50, breed = "tuxedo")
+race.fun(tonks, darwin) #tonks is first cat here....she is lighter; therefore, she should win the race...the lighter cat wins the race
+race.fun(darwin, tonks) #switch it up so that the plump cat is first, to making sure all is working well
+
+#PrintFunction
+print.cat <- function(x,...){
+  cat("This", x$color, "colored cat weighs", x$weight, "lbs.", "Good things it's a", x$breed, "breed, people like that kind of cat!\n")
+}
+print.cat(tonks)
 
 
-#tonks is first cat here....she is lighter; therefore, she should win the race
-      #the lighter cat wins the race
-race.fun(tonks, darwin)
+#2) Implement a point class that holds x and y information for a point in space.
+#function
+new.point <- function(x, y){
+  output <- list(x=x, y=y)
+  class(output) <- "point"
+  return(output)
+}
 
-#switch it up so that the plump cat is first
-race.fun(darwin, tonks)
+#print.function
+print.point <- function(x,...){
+  cat("For this point,",x$x,"and",x$y,",are the coordinates.\n")
+}
+
+pointA <- new.point(15, 49)
+print.point(pointA)
+
+pointB <- new.point(45, 23)
+print.point(pointB)
 
 
-
-
-
-
+#3) Write a distance method that calculates the distance between two points in space. 
 
 
 

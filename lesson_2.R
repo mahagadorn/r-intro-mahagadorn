@@ -357,8 +357,8 @@ for(i in 1:20){
 #equation would look like this (y(t) <- a*exp(-b*exp(-c*t)))
 #}
 popsize.fun <- function(a,b,c,t,...){ #these are our arguments
-  if(y <- a*exp(-b*(exp(-c*t))))    #e is exponential = exp() 
-    return(y)
+  ps=a*exp(-b*(exp(-c*t)))    #e is exponential = exp() 
+    return(ps)
 }
 
 #example for random numbers
@@ -401,7 +401,7 @@ PS.ColDif.fun<- function(a,b,c,t,...){
        xlab = "Time Recordings", 
        ylab = "Population Size",
        main = "Gompertz Curve: Population Size Changes Over Time",
-       col= ifelse (y > a, "blue", "red"))
+       col= ifelse (poo > 100, "blue", "red"))
 }
 
 TimeRec <- seq(0,50, by =2)
