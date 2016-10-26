@@ -221,16 +221,37 @@ print.point <- function(x,...){
   cat("For this point,",x$x,"and",x$y,",are the coordinates.\n")
 }
 
-pointA <- new.point(15, 49)
+pointA <- new.point(1, 9)
+pointB <- new.point(4, 3)
 print.point(pointA)
-
-pointB <- new.point(45, 23)
 print.point(pointB)
 
 
 #3) Write a distance method that calculates the distance between two points in space. 
 
+#method
+dist.method <- function(pointA, pointB, ...){
+  if(!inherits(pointA, 'point') | !inherits(pointB, 'point'))
+    stop("WARNING: You have not given me two points to work with!!!")
+  xSQ <- (pointB$x - pointA$x)^2
+  ySQ <- (pointB$y - pointA$y)^2
+  Dist <- round(sqrt(xSQ+ySQ), digits=1)
+  if(Dist !=0){
+    print("The distance between the two points is....")
+    return(Dist)
+  } 
+  print("Warning: Distance between two points was zero. You should really look into this!\n")
+  return(Dist)
+}
 
+dist.method(pointA, pointB)
 
+#Looks like this works (AND THE CROWD GOES WILD)
 
+#I do not want this to be uncommented, but make it know I tried this to see if the return would print out right and it looks like it does.
+#pointA <- new.point(1, 9)
+#pointB <- new.point(1, 9)
+#dist.method(pointA, pointB)
+# [1] "Warning: Distance between two points was zero. You should really look into this!\n"
+# [1] 0
 
