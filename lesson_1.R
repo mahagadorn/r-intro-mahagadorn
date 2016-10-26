@@ -658,9 +658,42 @@ rpois(n=15, lambda = 100)
 
 
 #22 Rank
+#rank(): returns the sample tanks of the values in a vector
+  #note...equal values and missing values can be handled in multiple ways
+  #input: is a numeric, complex, character, or logical vector
+  #if all the components are different (and no NAs), then the ranks will be well defined
+  #you have multipe tie.methods-->allows you to specify how the ties (same number) are treated
+
+rank(c)
+# [1]  1  2  3  4  5  6  7  8  9 10
 
 
+#23 sort, rank, order
+#sort()
+  #sorts the values in a vector. Default is decreasing=FALSE (so increasing in size)
+sort(c)
+  #[1]  10  20  30  40  50  60  70  80  90 100
 
+#rank is already described above
+
+#order()
+  #provides you with the order of the values
+order(c)
+  # [1]  1  2  3  4  5  6  7  8  9 10
+
+#difference between rank() and order()
+  #rank(): returns a vector with the "rank" of each value. the number in the first position is the 9th lowest
+  #order(): returns the indices that would put the initial vector x in order
+
+#24 outer()
+  #this function applies a function to two different arrays
+  
+h <- seq(1,20, by=2)
+length(h)
+i <- seq(21,40, by=2)
+length(i)
+
+outer(h,i)
 
 
 
