@@ -175,22 +175,34 @@ print.mammal(dexter, brian)
 ################################################
 
 #1
-
+#First step: write a function that will make cat a class
 new.cat <- function(length, weight, breed){
   output <- list(length=length, weight=weight, breed=breed)
   class(output) <- "cat"
   return(output)
 }
 
-tonks <- new.cat(length=60, weight=40, breed="mixed")
+race.fun <- function(first, second){      #first and second are cat names (object names)
+  if(!inherits(first, "cat") | !inherits(second, "cat"))
+    stop("You haven't given me two cats!")
+  if(first$weight < second$weight){
+    print("First cat won!")
+    return(first)
+  }
+  print("Second cat won!")
+  return(second)
+}
 
-race <- w
+tonks <- new.cat(length = 60, weight = 40, breed = "mixed")  #opposite of usual. need cat name first <- new.cat
+darwin <- new.cat(length = 55, weight = 50, breed = "tuxedo")
 
 
+#tonks is first cat here....she is lighter; therefore, she should win the race
+      #the lighter cat wins the race
+race.fun(tonks, darwin)
 
-
-
-
+#switch it up so that the plump cat is first
+race.fun(darwin, tonks)
 
 
 
