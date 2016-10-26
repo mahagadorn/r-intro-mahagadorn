@@ -351,7 +351,6 @@ for(i in 1:20){
 #popsize.fun <- function(x){
 #startloop(input the equation here: translated--y(of time) equal to a times exponential function containing -b times exponential function containing -c times time factor)
 #equation would look like this (y(t) <- a*exp(-b*exp(-c*t)))
-
 #}
 popsize.fun <- function(a,b,c,t,...){ #these are our arguments
   if(y <- a*exp(-b*(exp(-c*t))))    #e is exponential = exp() 
@@ -360,16 +359,52 @@ popsize.fun <- function(a,b,c,t,...){ #these are our arguments
 
 #example for random numbers
 
-popsize.fun(a=1,b=2,c=3,t=50)
-#> popsize.fun(a=1,b=2,c=3,t=50)
+PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50)
+print(PS.ex1)
+#> PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50)
+#> print(PS.ex1)
 #[1] 1
 
 #changing numbers to make sure it works
-popsize.fun(a=10,b=5,c=11,t=100)
+PS.ex2 <- popsize.fun(a=10,b=5,c=11,t=100)
+print(PS.ex2)
 #> popsize.fun(a=10,b=5,c=11,t=100)
+#> print(PS.ex2)
 #[1] 10
 
-######holy cow it works! remember the way you thought this out for the next one.
+
+#6) The biologist likes your function so much they want you to write another function that plots the progress
+#of the population over a given length of time. Write it for them.
+
+plotPS.Fun <- function(a,b,c,t,plot=TRUE,...){
+  plot(TimeRec, popsize.fun(a,b,c,t=TimeRec),
+       xlab = "Time Recordings", 
+       ylab = "Population Size", 
+       main = "Population Size Changes Over A Given Time based on Gompertz Function")
+}
+
+#Recording for input
+TimeRec <- seq(0,10, by =2) #maybe the seq() function can be used here? This would give a time series? come back to this #need to start this with 0
+PSTimePlot<- plotPS.Fun(a=1, b=.2, c=0.5, t = TimeRec) #since these specifics aren't built into the function they can be adjust as needed
+  
+
+#7) #The biologist has fallen in love with your plotting function, but want to colour y values above a as blue,
+#and y values above b as red. Change your function to allow that.
+
+#this works to differentiate between colors
+PS.ColDif.fun<- function(a,b,c,t,...){
+  plot(TimeRec, popsize.fun(a,b,c,t=TimeRec,...),
+       xlab = "Time Recordings", 
+       ylab = "Population Size",
+       ylim = c(0.6,1.2),
+       main = "Gompertz Curve: Population Size Changes Over Time",
+       col= ifelse (y > a, "blue", "red"))
+}
+
+TimeRec <- seq(0,10, by =1)
+DifColPlot<- PS.ColDif.fun(a=1, b=.2, c=10, t = TimeRec)
+
+
 
 
 
