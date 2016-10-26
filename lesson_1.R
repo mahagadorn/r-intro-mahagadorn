@@ -316,7 +316,13 @@ sort(c(1,3,5,1), TRUE)
 
 
 
-#Exercises 1.7
+
+
+################################################
+## Exercises ###################################
+################################################
+
+
 
 #1. Concatenate c()
 #c() means to concatenate
@@ -330,9 +336,325 @@ c(c(1,2,3), c(4,5,6))
 
 
 #2. cbind()
-#combines two matrix-like R objects by columns and rows
+#combines vectors by rows and columns
 #in essense this combines two objects by their columns or their rows
-cbindEx <- 
+
+num <- 1:5
+lets <- c("a", "b", "c", "d", "e")
+
+cbindEx <- cbind(num, lets)
+cbindEx
+
+#      num lets
+# [1,] "1" "a" 
+# [2,] "2" "b" 
+# [3,] "3" "c" 
+# [4,] "4" "d" 
+# [5,] "5" "e" 
+
+#3.a col
+#col(x) is a function that returns a matrix of integers indicating their column number in a matrix-like object
+#a matrix-like object is require here--> one that is dim(x)=2
+
+#3.b row
+# function returns a matrix of integers indicating their row number in a matrix-like object
+#needs to be a matrix like object
+
+rctest.df <- data.frame(date=c(8,20,2015), I.Do=c("We","Got","Married"), Yay=c(TRUE,TRUE,TRUE))
+rctest.df
+
+#   date    I.Do  Yay
+# 1    8      We TRUE
+# 2   20     Got TRUE
+# 3 2015 Married TRUE
+
+rctest.df[,2] #[1] We      Got     Married
+rctest.df[2,2] #Got
+rctest.df[1,] #1    8   We TRUE
+
+
+#4. cut
+#cut(): divides a range of vector (x) into intervalces and codes the values in x according to which interval they fall
+#lots of cool arguments: see ?cut to see all the options
+#when to actually use cut(): when you want to break up a continous variable such as "age" or year into a categorical var
+#or maybe you use want to classify a categorical variable (year) into larger bins
+
+#let's say we have rain data for 2000 to 2010 (denoted 1-10 for easy)
+year <- c(0:10)
+rain <- seq(50,100, by=5)
+cutmeRain.df <-data.frame(year,rain)
+
+#now we can use the cute to may year a factor
+yearFact <- cut(as.numeric(as.character(cutmeRain.df$year)), breaks = 2)
+table(yearFact)
+
+#5. diff
+#returns suitably lagged and iterated differences
+#in english: the function calculates the differences between all consecutive values of a vector
+
+randonumbs <- c(1,5,8,-1,12,13)
+diff(randonumbs)
+#[1]  4  3 -9 13  1
+#aka 5-1=4, 8-5=3, -1-8=-9,.....
+
+#6. dim
+#tells you the dimensions of an object(aka matrix, array, df)
+#or it can set the dimensions of something
+
+dim(rctest.df)
+#[1] 3 3
+rctest.df
+#  date    I.Do  Yay
+# 1    8      We TRUE
+# 2   20     Got TRUE
+# 3 2015 Married TRUE
+
+#7. rownames, colname, names
+#colname: retrieve or set column names in a matrix-like object
+#rowname: retrieve or set row names in a matrix-like object
+#names: to get or set names
+
+life <- matrix(c("past", "present", "boo"))
+bugs <-cbind(c("beetles", "bees", "flies"))
+ahh<-c(1,2,3)
+
+coolmat <- cbind(bugs, ahh)
+colnames(coolmat) <- c("bugs", "ahh")
+rownames(coolmat) <-life
+coolmat <- as.data.frame(coolmat)
+coolmat
+names(coolmat)
+
+
+#8. expand.grid
+#create a data frame from all combinations of supplied vectors or factors
+#DF containing one row for each combination of supplied factor
+
+a <- seq(0, 1000, length.out = 50)
+b <- seq(-1,1, length.out = 5)
+exp1 <- expand.grid(x = x, y = y)
+exp2 <- expand.grid(x = x, y = y, KEEP.OUT.ATTRS = TRUE)
+
+#tinker around more with this function
+
+#9. eigen, %*%, lower.tri, diag
+
+#eigen: computes the eigen values and eigenvectors of numeric or complex matrices
+eigenvals <- eigen(cbind(c(1,5), c(-2,10)))
+eigenvals
+
+# $values
+# [1] 8.701562 2.298438
+# 
+# $vectors
+#            [,1]       [,2]
+# [1,]  0.2513506 -0.8387428
+# [2,] -0.9678961  0.5445277
+
+#%*%: arithmetic operator
+mult<- (5 %*% 4)
+mult
+# [,1]
+# [1,]   20
+
+#do it bigger
+c <- seq(10,100, by=10)
+d <- seq(1,10)
+
+multbig <-c %*% d
+print(multbig)
+
+#lower.tri & lower.tri: returns a matrix of logicals the same size of a give matrix with entries True in lower or upper triangle
+lower.tri(c)
+upper.tri(c)
+
+#diag: extract or replace the diagonal of a matrix, or construct a diagnal matrix
+dc <- diag(c)
+print(dc)
+#that is awesome
+#       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+#  [1,]   10    0    0    0    0    0    0    0    0     0
+#  [2,]    0   20    0    0    0    0    0    0    0     0
+#  [3,]    0    0   30    0    0    0    0    0    0     0
+#  [4,]    0    0    0   40    0    0    0    0    0     0
+#  [5,]    0    0    0    0   50    0    0    0    0     0
+#  [6,]    0    0    0    0    0   60    0    0    0     0
+#  [7,]    0    0    0    0    0    0   70    0    0     0
+#  [8,]    0    0    0    0    0    0    0   80    0     0
+#  [9,]    0    0    0    0    0    0    0    0   90     0
+# [10,]    0    0    0    0    0    0    0    0    0   100
+
+#10 gl
+#gl(): generate factors by specifying the fattern of their levels
+
+gl(n=2, k=8, labels = c("control", "Treatment")) 
+#n is integer giving number of levels
+#k is integer giving number of replications
+#labels is obvious
+
+gl(n=2, k=1, length=20) #alternating 1s and 2
+
+#11 identical
+#identical()= the safe and reliable way to test if two objects are exactly the same
+
+e <- seq(1,10, by=2)
+f <- seq(1,10, by=2)
+g <- seq(1,10, by=3)
+
+identical(e,f)
+#[1] TRUE
+identical(e,g)
+#[1] FALSE
+
+#12 image
+#simply it's to plot an image
+#not so simply, creates a grid of colored or gray-scaled rectangles with colors corresponsing to the values
+# x and y can't be vector, must be matrix like
+z=1:8
+image(e,g)
+
+x <- 10*(1:nrow(volcano))
+y <- 10*(1:ncol(volcano))
+image(x, y, volcano, col = terrain.colors(100), axes = FALSE)
+
+
+#13 library
+#use this all the time
+#loads a package that you want to use at a give time
+#make sure that you have installed the package first
+
+install.packages("ggplot2")
+library("ggplot2")
+
+#14 length
+#tells you the length of a given vector
+#can also subset a df, matrix, etc.
+
+length(a) #a already defined above
+#[1] 50 so there are 50 elements in vector a
+
+length(coolmat$bugs)
+#[1] 3
+
+
+#15 jitter
+#add a small amount of noise to a numeric vector
+print(c)
+#[1]  10  20  30  40  50  60  70  80  90 100
+jitc<- jitter(c)
+print(jitc)
+# [1]  9.898918 18.996909 29.908385 41.690786 51.285662 61.446628
+# [7] 68.987767 80.149588 90.588572 98.248299
+
+
+
+#16 ls
+#ls can be used to give the names of the object that are in a specific location
+
+#using pwd:    /Users/Mal/documents/ProgrammingClass/r-intro-mahagadorn
+#return=
+  #Programming for Biologists - Oct_11_2016.pdf
+  #Programming for Biologists - Oct_19_2016.pdf
+  #lesson2classnotes.R
+  #lesson_1.R
+
+#ls -lh gives you alot more information--permissions, file size, date, etc
+  # -rw-r--r--@ 1 Mal  staff   432K Oct 19 10:22 Programming for Biologists - Oct_11_2016.pdf
+  # -rw-r--r--@ 1 Mal  staff   451K Oct 19 11:06 Programming for Biologists - Oct_19_2016.pdf
+  # -rw-r--r--  1 Mal  staff   717B Oct 25 21:00 lesson2classnotes.R
+  # -rw-r--r--  1 Mal  staff    17K Oct 26 01:54 lesson_1.R
+
+#rm(list=ls()): removes all the variables from a specified workspace
+
+
+#17 mean, median, max, min
+#they pretty much do what they say
+#mean(): gives you the average of a R object. Vector or you can subset (i think)
+#median(): calculates the sample median
+#max(): give you the highest number
+#min(): give your the lowest number
+
+#lets use c again
+mean(c)  #[1] 55
+median(c)  #[1] 55
+max(c)  #[1] 100
+min(c)  #[1] 10
+
+
+#18 paste
+#paste(): concatenates a vector after it converts it to a character vector
+#arguments are converted to characters strings
+#ultimately you get an output of the character string
+#not in table format or anything pretty
+
+paste(c)
+    #[1] "10"  "20"  "30"  "40"  "50"  "60"  "70"  "80"  "90"  "100"
+
+
+#19 read.csv, read.table, write.csv, write.table
+#read.csv and read.table==very similar except for arguments
+    #in general, both functions are used to read in tabular(table) data into R
+    #tabular read in is used to create a data frame
+    #R documentation states that read.csv and read.table are identical except of the defaults
+    #they are intended for reading in 'comma seperated files'
+    #looks like you have some extra arguments/freedom using read.table
+      #can specify commas and decimals
+#write.csv and write.table
+    #write.table: prints the argument x(which is just the object to be written) to a file
+    #the argument will be converted to a dataframe if it isnt one or a matrix
+    #this function provides a 'convenience wrapper' for writing CSV files
+    #the wrappers are deliberately inflexible, as they are designed to ensure the correct conventions are used to write a valid file
+#write.csv is like write.table except by default there are not column names for a column of rows
+
+
+#20 rnorm, pnorm, dnorm, qnorm
+#rnorm(): for rnorm(n), rnorm() will generate n number of random observations from a normal distribution with the option 
+    #...specifying a mean or a sd.  By default the mean and sd are 0 and 1, respectively  
+#dnorm(): gives you the density of a vector of quantiles for the normal distribution with mean equal to specified mean and 
+    #...standard deviation equal to specified sd.
+#pnorm(): gives you a distribution function of a vector of quantiles for the normal distribution with mean equal to specified mean and 
+    #...standard deviation equal to specified sd. 
+#qnorm() gives you a quantile function for a vector of probabilites for the normal distribution with mean equal to specified mean and 
+    #...standard deviation equal to specified sd.
+
+
+rnorm(3)
+#[1]  0.5409425  0.2848835 -1.0784023
+dnorm(c)
+# [1]  7.694599e-23  5.520948e-88 1.473646e-196  0.000000e+00
+#  [5]  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+#  [9]  0.000000e+00  0.000000e+00
+
+probvec <- seq(0.5,0.95, by=.05)
+qnorm(probvec)
+ # [1] 0.0000000 0.1256613 0.2533471 0.3853205 0.5244005 0.6744898
+ # [7] 0.8416212 1.0364334 1.2815516 1.6448536
+
+pnorm(probvec)
+ # [1] 0.6914625 0.7088403 0.7257469 0.7421539 0.7580363 0.7733726
+ # [7] 0.7881446 0.8023375 0.8159399 0.8289439
+
+
+#21 runif, rpois
+#runif 
+  #is a function that provides information about a uniform distribution
+  #specifically, runif generates the random deviates
+  #runif won't generate any extreme values unless max = min or max-min is small compared
+    #...to the overall min
+
+runif(12, min=3, max=7)
+   # [1] 3.536333 5.571975 4.729899 6.693991 3.661862 6.261990 6.680269
+   # [8] 3.461964 3.931724 3.186388 5.912445 3.982177
+
+#rpois
+  #generates the random deviates for the Poisson distribution
+  #a particular lamda has to be specified
+  #for rpois you have to specify n= number of random variables to return
+  #see homework assigment for A.Cutlers class
+  #whole assigment as based on Poisson distributions
+  
+rpois(n=15, lambda = 100)
+  #[1] 115  93  83 101  99  95 102 121  98 100 119  97 101  90  92
 
 
 
@@ -343,16 +665,13 @@ cbindEx <-
 
 
 
-################################################
-## Exercises ###################################
-################################################
 
-# c - concatenate
-#     - takes two (or more) vector and joins them together
-c(1, 2, 3)
-c(c(1,2,3), c(4,5,6))
-#     - they need to be of the same type, though!
-c(1,2, "three")
+
+
+
+
+
+
 
 
 ################################################

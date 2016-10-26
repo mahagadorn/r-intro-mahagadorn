@@ -281,7 +281,11 @@ felix.leiter(10) #only this value is returned
 
 
 
-#Exercises 2.6
+################################################
+## Exercises ###################################
+################################################
+
+
 #1)
 for(i in 20:10){ #specified the number range
   print(i) #tells it to print
