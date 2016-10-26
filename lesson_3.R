@@ -174,6 +174,28 @@ print.mammal(dexter, brian)
 ## Exercises ###################################
 ################################################
 
+#1
+
+tonks <- list(length=60, weight=40, breed="mixed")
+class
+
+new.cat <- function(length, width, breed){
+  output <- list(length=length, weight=weight, breed=breed)
+  class(output) <- "cat"
+  return(cat)
+}
+
+new.cat() 
+
+
+
+
+
+
+
+
+
+
 
 
 

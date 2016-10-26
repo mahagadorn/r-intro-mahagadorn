@@ -693,8 +693,20 @@ length(h)
 i <- seq(21,40, by=2)
 length(i)
 
-outer(h,i)
+outer(h,i, FUN = "^")
+#output huge so didn't paste. See what it looks like by just...
 
+
+#25 rep()
+#rep() replicates the values in x
+rep(c, 3)
+# [1]  10  20  30  40  50  60  70  80  90 100  10
+# [12]  20  30  40  50  60  70  80  90 100  10  20
+# [23]  30  40  50  60  70  80  90 100
+
+
+#26 rowSum, colSum
+  #rowSum: 
 
 
 
