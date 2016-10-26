@@ -176,16 +176,15 @@ print.mammal(dexter, brian)
 
 #1
 
-tonks <- list(length=60, weight=40, breed="mixed")
-class
-
-new.cat <- function(length, width, breed){
+new.cat <- function(length, weight, breed){
   output <- list(length=length, weight=weight, breed=breed)
   class(output) <- "cat"
-  return(cat)
+  return(output)
 }
 
-new.cat() 
+tonks <- new.cat(length=60, weight=40, breed="mixed")
+
+race <- w
 
 
 

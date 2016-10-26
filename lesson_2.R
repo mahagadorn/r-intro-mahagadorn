@@ -400,14 +400,17 @@ PS.ColDif.fun<- function(a,b,c,t,...){
   plot(TimeRec, popsize.fun(a,b,c,t=TimeRec,...),
        xlab = "Time Recordings", 
        ylab = "Population Size",
-       ylim = c(0.6,1.2),
        main = "Gompertz Curve: Population Size Changes Over Time",
        col= ifelse (y > a, "blue", "red"))
 }
 
-TimeRec <- seq(0,10, by =1)
-DifColPlot<- PS.ColDif.fun(a=1, b=.2, c=10, t = TimeRec)
+TimeRec <- seq(0,50, by =2)
+DifColPlot<- PS.ColDif.fun(a=280, b=100, c=.4, t = TimeRec)
 
+
+
+
+280, 100, .4
 
 
 
