@@ -305,6 +305,9 @@ for(i in 20:10){ #saying for all numbers between 20 and 10
 isPN.fun <- function(x){ 
   for(i in (x-1):2){  #translation: some number(index) in the range of (x-1) all the way to 2---so if x is 5 it's 5-1:2 or 4,3,2
     remd <- x %% i    #store the remainders of x divided by the index
+  if(x < 2){          #THIS IS IMPORTANT: You added this in late because your function was crashing a i=1
+    return(FALSE)
+  }  
   if(remd == 0){      #if the remainder is 0 its not a prime number; prime number= divisible by itself and one. So x-1 (aka one less than itself) to 2 (so not one); if either of these returns a 0 that means it's divisible by more than itself and one
     return(FALSE)
     }  
@@ -315,16 +318,21 @@ isPN.fun <- function(x){
 isPN.fun(7)
 isPN.fun(8)
 
+#Dr.Pearse helped to trouble shoot this
+#His recommendation was to use the index to your advance when troubleshooting loop errors
+#simply type "i" in the console, this will tell you the last iteration that it made it through
+#with the error, it crashed at one because i in 1:20 was used (see question below) the one was taken in to consideration and it blew up my function
+#remember that little tid bit of help
+
+
 #4) Write a loop that prints out the numbers from 1 to 20, printing “Good: NUMBER” if the number is
 #divisible by five and “Job: NUMBER” if then number is prime, and nothing otherwise.
 
 #first write a function that does divisibility by five
 d5.fun <- function(x){
-  if (x %% 5 == 0) {
+  if (x %% 5 == 0)
     return(TRUE)
-  }else{
-    return(FALSE)
-  }
+  return(FALSE)
 }
 
 #function for prime numbers already written "isPN.fun()"
@@ -336,10 +344,6 @@ for(i in 1:20){
     print(c("Job", i))
   }
 }
-
-#error message: Error in if (remd == 0) { : missing value where TRUE/FALSE needed
-#first part workds...something is wrong with the prime number function
-
 
 #5)
 #A biologist is modelling population growth using a Gompertz curve, which is defined as y(t) = a.e−b.e−c.t
@@ -357,60 +361,71 @@ for(i in 1:20){
 #equation would look like this (y(t) <- a*exp(-b*exp(-c*t)))
 #}
 popsize.fun <- function(a,b,c,t,...){ #these are our arguments
-  ps=a*exp(-b*(exp(-c*t)))    #e is exponential = exp() 
-    return(ps)
+  psize=a*exp(-b*(exp(-c*t)))    #e is exponential = exp() 
+    return(psize)
 }
 
-#example for random numbers
+PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50) #example for random numbers
+print(PS.ex1) #[1] 1
 
-PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50)
-print(PS.ex1)
-#> PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50)
-#> print(PS.ex1)
-#[1] 1
-
-#changing numbers to make sure it works
-PS.ex2 <- popsize.fun(a=10,b=5,c=11,t=100)
-print(PS.ex2)
-#> popsize.fun(a=10,b=5,c=11,t=100)
-#> print(PS.ex2)
-#[1] 10
+PS.ex2 <- popsize.fun(a=10,b=5,c=11,t=100)  #changing numbers to make sure it works
+print(PS.ex2) #[1] 10
 
 
 #6) The biologist likes your function so much they want you to write another function that plots the progress
 #of the population over a given length of time. Write it for them.
 
-plotPS.Fun <- function(a,b,c,t,plot=TRUE,...){
-  plot(TimeRec, popsize.fun(a,b,c,t=TimeRec),
-       xlab = "Time Recordings", 
-       ylab = "Population Size", 
-       main = "Population Size Changes Over A Given Time based on Gompertz Function")
-}
+TimeRec <- seq(0,100, by =4)  
 
-#Recording for input
-TimeRec <- seq(0,10, by =2) #maybe the seq() function can be used here? This would give a time series? come back to this #need to start this with 0
-PSTimePlot<- plotPS.Fun(a=1, b=.2, c=0.5, t = TimeRec) #since these specifics aren't built into the function they can be adjust as needed
-  
+#function
+plotPopSize.Fun <- function(a,b,c,t,...){
+    for(i in 1:length(TimeRec)){
+      pop.growth <- popsize.fun(a,b,c,t,..)
+    }
+    plot(TimeRec, pop.growth,
+      xlab = "Time Recordings (in years)", 
+      ylab = "Population Size (in millions)", 
+      main = "Gompertz Curve: Population Size Changes Over Time")
+} 
+
+PopPlot<- plotPopSize.Fun(a=500, b=95, c=0.1, t=TimeRec) 
+
 
 #7) #The biologist has fallen in love with your plotting function, but want to colour y values above a as blue,
 #and y values above b as red. Change your function to allow that.
 
+TimeRec <- seq(0,100, by =2) 
+
 #this works to differentiate between colors
-PS.ColDif.fun<- function(a,b,c,t,...){
-  plot(TimeRec, popsize.fun(a,b,c,t=TimeRec,...),
-       xlab = "Time Recordings", 
-       ylab = "Population Size",
+plotPopSizeCol.fun <- function(a=a,b,c,t){
+  colors <- rep("black", length(TimeRec))  #will make it ALWAYS the same length as TimeRec(or time factor)
+  pop.growth <- TimeRec
+  for(i in 1:length(TimeRec)){
+    pop.growth <- popsize.fun(a,b,c,t,..)
+      if(pop.growth[i] > a){
+          colors[i] <- "blue"
+      } 
+      if(pop.growth[i] > b){
+          colors[i] <- "red"
+      }
+  }
+  plot(TimeRec, pop.growth,
+       xlab = "Time Recordings (in years)", 
+       ylab = "Population Size (in millions)", 
        main = "Gompertz Curve: Population Size Changes Over Time",
-       col= ifelse (poo > 100, "blue", "red"))
-}
+       col= colors)
+} 
 
-TimeRec <- seq(0,50, by =2)
-DifColPlot<- PS.ColDif.fun(a=280, b=100, c=.4, t = TimeRec)
-
+ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec) 
 
 
 
-280, 100, .4
+
+
+
+
+
+
 
 
 
