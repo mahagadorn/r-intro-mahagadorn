@@ -437,25 +437,16 @@ ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec)
 #function
 ImABox <- function(width,height){
   ast.vect <- c("*")
-  cat(rep(ast.vect, times = width), collapse = "") #saying repeat asteric vector the same number of times as width
+  cat(noquote(paste(rep(ast.vect, times = width), collapse = ""))) #saying repeat asteric vector the same number of times as width
   cat("\n")     #saying to go to the next line, if you don't do this it won't move to the middle section
-  for (i in height){
-    cat(ast.vect, paste(rep((!width-2)), collapse = ""), ast.vect) #something is wrong here
+    for (i in height){
+      cat(ast.vect, paste(rep(width-2), collapse = ""), ast.vect) #something is wrong here
   }
   cat("\n") 
-  cat(rep(ast.vect, times = width)) #last line
+  cat(noquote(paste(rep(ast.vect, times = width), collapse = ""))) #last line
 }
 
 ImABox(5,3)
-
-
-
-
-
-
-
-
-
 
 
 
