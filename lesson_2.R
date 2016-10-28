@@ -419,6 +419,43 @@ plotPopSizeCol.fun <- function(a=a,b,c,t){
 ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec) 
 
 
+# 8 You are beginning to suspect the biologist is taking advantage of you. Modify your function to plot in
+# purple any y value that’s above a and b. Hint: try putting 3==3 & 2==2 and 3==4 | 2==2 into an if
+# statement and see what you get. Using this construction may make this simpler.
+
+#MAH come back to this
+
+
+#9 Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
+  # *****
+  # *   *
+  # *****
+
+#rect() function??? no because I can't make it with astericks
+
+
+#function
+ImABox <- function(width,height){
+  ast.vect <- c("*")
+  cat(rep(ast.vect, times = width), collapse = "") #saying repeat asteric vector the same number of times as width
+  cat("\n")     #saying to go to the next line, if you don't do this it won't move to the middle section
+  for (i in height){
+    cat(ast.vect, paste(rep((!width-2)), collapse = ""), ast.vect) #something is wrong here
+  }
+  cat("\n") 
+  cat(rep(ast.vect, times = width)) #last line
+}
+
+ImABox(5,3)
+
+
+
+
+
+
+
+
+
 
 
 
