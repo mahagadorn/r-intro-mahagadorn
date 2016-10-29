@@ -515,7 +515,7 @@ TextBox(23, 13, text="Keep Calm, Code On!")
 
 ArbBox <- function(lets, height, width, text){
   lets <- c(lets)
-  letsRep <- noquote(rep(lets, times=(width/3)))
+  letsRep <- noquote(rep(lets, times=(width/3)))    #repeat letters
     for (i in width){
       if(nchar(text) > width-2){
         print("Sorry friend, text is too long")
@@ -535,4 +535,14 @@ ArbBox <- function(lets, height, width, text){
 
 
         
-ArbBox(lets = c("w","d","p"), height = 3, width = 12, text = "hey")
+ArbBox(lets = c("w","d","p"), height = 3, width = 9, text = "hey")
+
+
+
+#12
+#What are we looking for here
+
+
+
+
+

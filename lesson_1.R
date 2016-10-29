@@ -706,13 +706,133 @@ rep(c, 3)
 
 
 #26 rowSum, colSum
-  #rowSum: 
+#rowSum (R documentation had it as rowsum)
+  #this function computes column sums across rows of a numerica matrix like object
+  #MAH this would be great for your research data frames for MS analysis
+    #sum across species(rows) to get a total of that species among all farms (columns)
+#colSum: enables you to form row and columns sums and means for numeric arrays (or DFs)
+
+#examples of these functions have been completed in DBeco spreadsheet
+#didn't want the data publically available :)
+
+
+#27 seq()
+#LOVE THIS FUNCTION!!!
+#allows you to generate a regular sequence of some value
+#see examples below
+
+seq(1:5) #[1] 1 2 3 4 5
+seq(0, 16, by=2) #[1]  0  2  4  6  8 10 12 14 16
+
+
+
+#28 source
+#source() is used for sourcing scripts in R
+#aka scripts that that you wrote seperately but want to "retrieve" it on the command line
+#allows R to perform several command one after the other without waiting for more instructions
+
+
+
+#29 which, which.min, which.max
+#which()
+    #this function takes a logical vector as an argument
+    #used for counting the number of elements in a vector (for some specific variable)
+
+test <- c("A", "B", "A", "B", "A")
+which(test=="A")
+#[1] 1 3 5
+#great for large vectors
+
+
+#which.min()  &   which.max()
+    #gives your the location of the first(minimum) or maximum of a numeric (or logical) vector
+
+test.number <- seq(1:15)
+which.max(test.number)  #[1] 15
+which.min(test.number)  #[1] 1
+
+which.max(test.number >5) #[1] 6
+
+
+#30  setdiff, intersect, union
+#these were awesome functions
+#you used each of these in your microbiome analysis to tease out the OTUs shared and diff
+
+vec.1 <- 1:25
+vec.2 <-20:30
+
+#setdiff: tells you the numbers that are different between two vectors
+setdiff(vec.1, vec.2)
+# [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+# [16] 16 17 18 19
+
+vec.3 <- 1:5
+vec.4 <-4:6
+setdiff(vec.3, vec.4)   #[1] 1 2 3
+
+
+#intersect: tells you what numbers or elements are in common between two vectors
+intersect(vec.1, vec.2)  #[1] 20 21 22 23 24 25
+
+
+#union: is everything in the two sets taken together. So A+B
+union(vec.4, vec.3)
+#so the values in vector 4 + 3
+
+
+
+#31 table
+#table is used to cross-classify factors to build a contingency table of counts at each combination of factor levels
+    #creates tabular results of categorical variables
+
+#https://www.r-bloggers.com/r-function-of-the-day-table/
+#go here for a great example
+
+## generate data for medical example
+clinical.trial <-data.frame(patient = 1:100,
+             age = rnorm(100, mean = 60, sd = 6),
+             treatment = gl(2, 50,
+             labels = c("Treatment", "Control")),
+             center = sample(paste("Center", LETTERS[1:5]), 100, replace = TRUE))
+
+is.na(clinical.trial$age) <- sample(1:100, 20)
+summary(clinical.trial)
+
+
+table(clinical.trial$center)
+# Center A Center B Center C Center D Center E 
+# 25       14       26       18       17 
+
+
+
+#32 with()
+#this allows you to use a data frame without having to continuously subset using the $
+#generic function that evaluates an expresion in a local environment
 
 
 
 
 
+################################################
+#par functions
+    #par is a function that can be used to set graphical parameters
+    #they can be set by specifying them as arguments to par in XX=value form or by passing them as a lit of tagged values
+#there are a riduculous amount of parameters that can be passed to par
+#listed below are a few that will be very useful
 
+    #1 cex   options
+      #this is part of a family so it has alot of options
+      #cex is a numerical value that indicated how much you want your plotting text and symbols
+          #...to be magnified compared to the defult
+      # you can adjust axis magnification (cex.axis), label magnification (cex.label), and titles
+
+    #2 col
+      #this will pretty much be used every time that you plot something
+      #it also comes with multiple options col.axis, col.label
+      #sure beats having to do it in excel :)
+      #default for all appear to be black
+
+    #3 
 
 
 
