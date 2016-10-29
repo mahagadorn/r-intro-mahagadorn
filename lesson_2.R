@@ -472,8 +472,6 @@ TextBox <- function(width, height, text){
   RMLines <- height-3
   Top <- RMLines/2
   Bottom <- RMLines/2
-
-  
    #saying repeat asteric vector the same number of times as width    #saying to go to the next line, if you don't do this it won't move to the middle section
   for (i in width){
       if(nchar(text) >= width-3) {
@@ -541,6 +539,103 @@ ArbBox(lets = c("w","d","p"), height = 3, width = 9, text = "hey")
 
 #12
 #What are we looking for here
+# In ecology, hurdle models are often used to model the abundance of species found on surveys. They
+# first model the probability that a species will be present at a site (drawn, for example, from a Bernoulli
+# distribution) and then model the abundance for any species that is present (drawn, for example, from
+# the Poisson distribution). Write a function that simulates the abundance of a species at n sites given a
+# probability of presence (p) and that its abundance is drawn from a Poisson with a given λ. Hint: there is
+# no Bernoulli distribution in R, but the Bernoulli is a special case of what distribution?...
+
+
+#1 probability that  a species will be present at a site (Bernoulli distribution)
+#2 model of the the abundance for any species present at the site (Poisson distribution)
+
+#abundance of a species at (n) sites 
+#given a probability of presence (p)
+#abundance is drawn from a Poisson give a specific lambda
+
+#variable= abundance, n, p, lambda
+
+#Bernoulli: of a random variable which takes the value 1 with success
+#probability of p and the value 0 with failure probability of q=1-p. 
+#one of the bionomial dist in R
+# use dbinom()!!
+#dbinom(x, size, prob, log = FALSE)
+#x is a vector of quantiles
+#prob=probablity of success on each trial
+#size=number of trials
+#log=if true, probabilities of p are give as log(p)
+
+#binomial dist. where n=1
+#one instace of a bernoulli dist. is called a trial
+
+#so we need the equation q=1-p  where p is between zero and one
+
+#Correction we don't want to use dbinom() because that will give the density
+#we want to use rbinom because it generates random diviates
+
+
+
+#Poisson --> qnorm
+#qpois(p=Vec207, lambda = lhat, lower.tail = TRUE, log.p = FALSE)
+
+
+Prob.Presence <- function(prob){     #Prob.Presence <- function(n, size, prob) was the former...removed args n and size because they remain contant-user doesnt need to adjust these??? right?
+  res.rbinom<-rbinom(n=1, size=1, prob = prob)    #n=number of observations-so 1, size=number of trials (see above but Bernoulli--one trial generates a new distribution--so one here)
+  return(res.rbinom)
+}
+
+Prob.Presence(prob = 1) #test this out  [1] 1
+Prob.Presence(prob = 0.5)  # can get a result of 0 or 1 is that right? Makes sense because its a 50:50 shot presumably
+Prob.Presence(prob = 0)  #Always zero!
+
+
+#Poisson --> qnorm?? this is what we used in Stats class, but this generates the quantiles. I dont think that that is what we want.
+#look up Poisson functions in R
+#found them 2 possiblities dpois--give you the log of the density or rpois() which generates random deviates
+#It that rpois() is more appropriate here but keep dpois in the back of you head incase it isn't
+#2 model of the the abundance for any species present at the site (Poisson distribution)
+# Write a function that simulates the abundance of a species at n sites given a
+# probability of presence (p) and that its abundance is drawn from a Poisson with a given λ. Hint: there is
+# no Bernoulli distribution in R, but the Bernoulli is a special case of what distribution?...
+
+
+Abd.Sp.Sim <- function(prob, n, lambda){      #is the number of sites, lambda=mean of a vector (or mean of abundances)
+  prob.of.pres <- Prob.Presence(prob = prob)
+  if(prob.of.pres!=1){                    #meaning the species is present!
+    print("Species not Present")
+  } else {
+    abundance<- rpois(n=n, lambda = lambda)
+    return(abundance)
+  }  
+}
+
+
+#a species at one site (n=1)
+Abd.Sp.Sim(prob = 0.5, n=1, lambda = 20)
+#[1] 14; so if prob is .5 and the average is 20. the predicted abundance is 14 at one site
+
+#lets try this out for multiple sites!
+Abd.Sp.Sim(prob = 0.5, n=5, lambda = 20)
+#so this is asking if our probability of finding a species is .5 or that we find it 50% and the average abundance of the species when its present is 20
+#then at five sites we will find it in abundances of :   [1] 18 17 25  7 16 (these represent the individual sites)
+
+
+Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
+#would we every truly have a probability of one? I don't think so, but test this anyway
+#[1] 24 21 20 22 21
+
+
+#13
+
+
+
+
+
+
+
+
+
 
 
 

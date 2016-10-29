@@ -832,11 +832,26 @@ table(clinical.trial$center)
       #sure beats having to do it in excel :)
       #default for all appear to be black
 
-    #3 
-
-
-
-
+    #3 font options
+      #font has alot of options as well
+      #the general funtion font() specifies what font you want to be used for your output text
+      #integer based: 1=default; 2= bold; 3=italic; 4=bold italic
+      #you can control the font for axes (font.axis), for labels (font.lab), ....
+        #...and for maintitles (font.main) and subtitles (font.sub) text
+    
+    #4 lty ()
+      #this function specifies they type of line that you want in your plot
+        #it can be either integer specified (see par help file for details about integer type and line type)
+        #You can also specify line type using character strings ("blank", "solid", "dashed", etc.)
+      
+      #different function but lwd() also plays into lty()
+        #lwd() means line width--so some positive integer to specify
+      
+    #5 tck() & tcl()
+      #These may sound like minor functions to some, however, in the past I have spent hours working on getting my "tick marks" right in excel
+      #These two functions control the legnth of tick mars as fractions (eith of smaller width or height of the plotting region ...
+        #...OR as a fraction of the height of a line of text)
+      #These functions will be used frequently whenever working with any type of plot
 
 
 
