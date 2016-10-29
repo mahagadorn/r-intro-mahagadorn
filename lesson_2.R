@@ -476,7 +476,7 @@ TextBox <- function(width, height, text){
   
    #saying repeat asteric vector the same number of times as width    #saying to go to the next line, if you don't do this it won't move to the middle section
   for (i in width){
-      if(nchar(text) > width-4) {
+      if(nchar(text) >= width-3) {
         print("Long winded? Your text has too many characters!")
       } else{
         #making vectors
@@ -506,6 +506,108 @@ TextBox(23, 13, text="Keep Calm, Code On!")
 
 
 #11
+# 11. Modify your box function to build boxes of arbitrary text, taking dimensions specified in terms of
+# dimensions, not the text. For example, box("wdp", 3, 9, "hey") might produce:
+
+# wdpwdpwdp
+# w  hey  w
+# wdpwdpwdp
+
+ArbBox <- function(lets, height, width, text){
+  lets <- c(lets)
+  letsRep <- noquote(rep(lets, times=(width/3)))
+    for (i in width){
+      if(nchar(text) > width-2){
+        print("Sorry friend, text is too long")
+      } else{
+        firstlet <- letsRep[1]
+        Lside <- rep("", times= (((width-3)-nchar(text))/2))
+        Rside <- rep("", times= (((width-3)-nchar(text))/2))
+        cat(letsRep, sep="", "\n")
+          for(j in firstlet){
+            textline <- c(firstlet, Lside, text, Rside, firstlet)
+            cat(textline, collapse = "", "\n")
+        }
+        cat(letsRep, sep="", "\n")
+    }
+  }
+}    
+
+
+        
+ArbBox(lets = c("w","d","p"), height = 3, width = 12, text = "hey")
+
+
+
+
+
+
+
+        
+        else{ (width > 3)
+               space <- c(firstlet, paste(rep("", times=(width-3))), firstlet, "\n")
+               #Firstline
+               cat(letsRep, sep="", "\n")
+                  for(i in 1:Top){
+                    cat(space)
+               }
+                  for(j in firstlet){
+                      cat(textline, "\n")
+               }
+                  for(k in 1:Bottom){
+                    cat(space)
+              }
+                cat(letsRep, sep="", "\n")
+           }
+       }    
+    }   
+}      
+        
+        
+        
+        
+        else{ 
+        space <- c(ast.vect, paste(rep("", times=(width-3))), ast.vect, "\n")
+        Lside <- rep("", times= (((width-3)-nchar(text))/2))
+        Rside <- rep("", times= (((width-3)-nchar(text))/2))
+        textline <- c(ast.vect, Lside, text, Rside, ast.vect, "\n")
+      }
+        
+      }
+    }
+
+
+}
+  
+lets <- c("w", "d", "p")
+  
+  
+  
+  }
+
+
+
+width=9
+lets <- c("w", "d", "p")
+cat(letsRep, sep="")
+
+
+ast.vect <- c("*")
+roomLR <- (((width-2)-nchar(text))/2) #I think this will count the number of characters???
+RMLines <- height-3
+Top <- RMLines/2
+Bottom <- RMLines/2
+
+
+
+
+
+
+
+
+
+
+
 
 
 
