@@ -2,13 +2,13 @@
 #Hi Carol...I will attempt to explain how I think I fixed it.
 #If it's unclear we can easily talk in class about it on Monday
 
-#So, if you look on line (XX) I specified      if(nchar(text) >= width-3)...When I added in the >= and not just > I think it addressed...
+#So, if you look on line (23) I specified      if(nchar(text) >= width-3)...When I added in the >= and not just > I think it addressed...
 #...some of the issues with the Right hand side "*" projecting out too far.  My thought process was (an others should feel free to comment on this)..
 #...that if you keep it at just >2 or 3 (accounting for the * on each side) then you don't give the words any "wiggle" room
 #in other words, they will but right up to the * on the right side and push it over.
 #once I changed that it helped a lot! Although, I am still having some issues
 
-#another change I made to account for this a bit is on lines (xx) to give it additional wiggle room
+#another change I made to account for this a bit is on lines (34-35) to give it additional wiggle room
 # had it subtract width by three hoping to include one extra space between the * and the text
 #this worked great UNTIL you get down to the text width being greater that the box width
 #hopefully, someone else will read this and have a few suggestions
