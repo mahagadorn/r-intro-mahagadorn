@@ -627,10 +627,24 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 
 
 #13
+# An ecologist really likes your hurdle function (will you never learn?). Write them a function that simulates
+# lots of species (each with their own p and λ) across n sites. Return the results in a matrix where each
+# species is a column, and each site a row (this is the standard used for ecology data in R).
 
 
+#steps:
+#so we already has a function that does it for ONE species at MANY sites.  Lets see what we can do to this function to make it do multiple species
+
+#right now we have 2 function
+
+Abd.Sp.Sim #will give us abundance per site
 
 
+SpeciesA <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 20))
+SpeciesB <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 50))
+SpeciesC <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 10))
+SpeciesD <- c(Abd.Sp.Sim (prob = 1, n=5, lambda = 50))
+SpeciesE <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 2))
 
 
 
