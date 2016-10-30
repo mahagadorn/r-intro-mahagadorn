@@ -671,10 +671,51 @@ Prob.Ab.Sp <- function(ListofSpecies){
 
 
 SpeciesDATA.TEST <- Prob.Ab.Sp(ListofSpecies)
+##ONLY GENERATES THE ABUNDANCES FOR SPECIES E
 
 
 
 
+#14
+# Professor Savitzky approaches you with a delicate problem. A member of faculty became disoriented
+# during fieldwork, and is now believed to be randomly wandering somewhere in the desert surrounding
+# Logan. He is modelling their progress through time in five minute intervals, assuming they cover a
+# random, Normally-distributed distance in latitude and longitude in each interval. Could you simulate this
+# process 100 times and plot it for him?
+
+#model in time through 5 minute time intervals
+#cover a random, normally-distributed distance in Latitude and Longitude in each interval
+#simulate process
+#plot it
+
+
+#NEED TO ASK WILL ABOUT THIS? I DONT THINK IT SHOULD BE A STRAIGHT LINE BUT WILL ASK
+
+Desert.Walk.Sim <- function(num.its, TI){
+  Time <- trunc(seq((0), to=(num.its*TI), by=((num.its*TI)/(num.its))))     #this works 0 to 500-->if you need to ajust to 5:500 5=TI
+  xcor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
+  xcor <- c(0, xcor)                                                        #added a zero here to make an origin
+  ycor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
+  ycor <- c(0, ycor)                                                        #again origin
+  coor.bytime <<- cbind(Time,xcor,ycor)                                     #generate a matrix HINT the <<- instead of <- saves it to the global environment 
+  sum.xcor <- cumsum(xcor)
+  sum.ycor <- cumsum(ycor)
+  for (i in Time) {
+    Last.sumxcor <- lastnumber<-tail((sum.xcor), n=1)
+    Last.sumycor <- lastnumber<-tail((sum.ycor), n=1)
+    DistancePlot <- plot(sum.xcor,sum.ycor, type = "l", lty=2, 
+                         xlab = "Longitude Coordinate",
+                         ylab = "Latitude Coordinate",
+                         main = "Similated Path for Lost Collegue")
+    points(0,0, col="darkorchid1", pch=15, cex=1.25)                      #points is awesome...it adds them after the fact.
+    points(Last.sumxcor, Last.sumycor, col="blue", pch=17, cex=1.25)
+  }
+} 
+
+
+Desert.Walk.Sim(100,5)
+#tried to add this in and couldnt get it to work.....
+#legend="topright", legend=c("Starting Point", "End Point"), pch=c(15,17), col= c("darkorchid1", "blue"))
 
 
 

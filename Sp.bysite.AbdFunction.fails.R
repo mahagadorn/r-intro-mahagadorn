@@ -38,7 +38,7 @@ Prob.Ab.Sp <- function(ListofSpecies){
             Data <- data.frame(Ind.Species, Spp.Abund)
             return(Data)
      } else {
-        for (i in i:Num.Sites) {
+        for (i in 1:Num.Sites) {
           Spp.Abund <- Abd.Sp.Sim(prob = Ind.Prob, n = Num.Sites, lambda = Ind.Lamba)
           Data <- data.frame(Ind.Species, Spp.Abund)
         }
