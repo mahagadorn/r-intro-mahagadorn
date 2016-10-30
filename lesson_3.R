@@ -263,24 +263,20 @@ pointB <- new.point(4, 3)
 
 #4 Implement a line class that takes two point objects and makes a line between them.
 
-#inputs is SL (startline), EL (endline)
+#we already have a point class(so we can use this to make our points "points")???
+#no make new
 
-#we already have a point class(so we can use this to make our points "points")
-
+#Make the class
 new.line <- function(x, y){
   output <- list(x=x, y=y)
   class(output) <- "line"
   return(output)
 }
 
-start.point <- new.line(1, 9)
-end.point <- new.line(4, 3)
-
-  
-  
+#method for plotting the line 
 plot.line <- function(start.point, end.point, ...){
     if(!inherits(start.point, 'line') | !inherits(end.point, 'line')) {
-      stop(noquote("Something is not write, recheck your classes!!!"))
+      stop(noquote("Something is not right, recheck your classes!!!"))
   } else{
       plot(NA, xlim=c(0,(end.point$x*(2*(end.point$x)))), ylim=c(0,(end.point$y*(2*(end.point$x)))), xlab="x", ylab="y")
       segments(start.point$x, start.point$y, end.point$x, end.point$y)
@@ -308,12 +304,53 @@ plot.line(start.point5, end.point6)
 
 
 
+#Implement a polygon class that stores a polygon from point objects. Hint: a polygon is really just a
+#load of lines.
 
 
+Poly.Line <- function(x, y){
+  output <- list(x=x, y=y)
+  class(output) <- "Polygon Line"
+  return(output)
+}
 
 
+Line.W <- Poly.Line(1,1)
+Line.X <- Poly.Line(1,4)
+Line.Y <- Poly.Line(4,4)
+Line.Z <- Poly.Line(4,1)
 
 
+#method for plotting the line 
+polygon.lines <- function(Line.W, Line.X, Line.Y, Line.Z, ...){
+  if(!inherits(Line.W, 'Polygon Line') | !inherits(Line.X, 'Polygon Line') | !inherits(Line.Y, 'Polygon Line') | !inherits(Line.Z, 'Polygon Line')) {
+    stop(noquote("Oops, you can't generate a Polygon with those inputs!!!"))
+  } else{
+    plot(NA, xlim=c(0,(Line.Z$x*(2*(Line.Z$x)))), ylim=c(0,(Line.X$y*(2*(Line.X$x)))), xlab="x", ylab="y")
+    segments(Line.W$x, Line.W$y, Line.X$x, Line.X$y, lwd=2)
+    segments(Line.Y$x, Line.Y$y, Line.Z$x, Line.Z$y, lwd=2)
+    segments(Line.W$x, Line.W$y, Line.Z$x, Line.Z$y, lwd=2)
+    segments(Line.X$x, Line.X$y, Line.Y$x, Line.Y$y, lwd=2)
+    points(Line.W$x, Line.W$y, pch=20, col="darkorchid1")
+    points(Line.X$x, Line.X$y, pch=20, col="deepskyblue2")
+    points(Line.Y$x, Line.Y$y, pch=20, col="darkorange")
+    points(Line.Z$x, Line.Z$y, pch=20, col="red")
+  }
+}
+
+
+polygon.lines(Line.W, Line.X, Line.Y, Line.Z)
+
+
+Line.W.2 <- Poly.Line(2,1)
+Line.X.2 <- Poly.Line(3,4)
+Line.Y.2 <- Poly.Line(4,4)
+Line.Z.2 <- Poly.Line(4,1)
+
+
+polygon.lines(Line.W.2, Line.X.2, Line.Y.2, Line.Z.2)
+
+#holy cow dung it work!!! AWESOME!!!!
 
 
 
