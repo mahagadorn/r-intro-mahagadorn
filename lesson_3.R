@@ -304,8 +304,8 @@ plot.line(start.point5, end.point6)
 
 
 
-#Implement a polygon class that stores a polygon from point objects. Hint: a polygon is really just a
-#load of lines.
+#5 Implement a polygon class that stores a polygon from point objects. Hint: a polygon is really just a
+#  load of lines.
 
 
 Poly.Line <- function(x, y){
@@ -354,7 +354,182 @@ polygon.lines(Line.W.2, Line.X.2, Line.Y.2, Line.Z.2)
 
 
 
+#6 Write plot methods for point and line objects.
+
+#I think I already did this above so copy paste
+
+#method for plotting a point
+plot.point <- function(pointA, pointB, ...){
+  if(!inherits(pointA, 'point') | !inherits(pointB, 'point')) {
+    stop(noquote("You do not have two things of class point!!!"))
+  } else{
+    plot(NA, xlim=c(0,20), ylim=c(0,20), xlab="x", ylab="y", type = "p")
+    points(pointA$x, pointA$y, pch=7, col="orange")
+    points(pointB$x, pointB$y, pch=7, col="blue")
+  }
+}
+
+#testing it out
+pointA <- new.point(1, 9)
+pointB <- new.point(4, 3)
+plot.point(pointA, pointB)
 
 
+#method for plotting a line
+plot.line <- function(start.point, end.point, ...){
+  if(!inherits(start.point, 'line') | !inherits(end.point, 'line')) {
+    stop(noquote("Something is not right, recheck your classes!!!"))
+  } else{
+    plot(NA, xlim=c(0,(end.point$x*(2*(end.point$x)))), ylim=c(0,(end.point$y*(2*(end.point$y)))), xlab="x", ylab="y")
+    segments(start.point$x, start.point$y, end.point$x, end.point$y)
+    points(start.point$x, start.point$y, pch=15, col="red")
+    points(end.point$x, end.point$y, pch=15, col="blue")
+  }
+}
+
+#Testing it out 
+start.point <- new.line(1, 9)
+end.point <- new.line(4, 3)
+plot.line(start.point, end.point)
+
+
+
+# 7. Write a plot method for a polygon. Hint: if this isn’t trivial, you’re doing something wrong.
+
+
+#method for polygon (many) lines
+polygon.lines <- function(Line.W, Line.X, Line.Y, Line.Z, ...){
+  if(!inherits(Line.W, 'Polygon Line') | !inherits(Line.X, 'Polygon Line') | !inherits(Line.Y, 'Polygon Line') | !inherits(Line.Z, 'Polygon Line')) {
+    stop(noquote("Oops, you can't generate a Polygon with those inputs!!!"))
+  } else{
+    plot(NA, xlim=c(0,(Line.Z$x*(2*(Line.Z$x)))), ylim=c(0,(Line.X$y*(2*(Line.X$x)))), xlab="x", ylab="y")
+    segments(Line.W$x, Line.W$y, Line.X$x, Line.X$y, lwd=2)
+    segments(Line.Y$x, Line.Y$y, Line.Z$x, Line.Z$y, lwd=2)
+    segments(Line.W$x, Line.W$y, Line.Z$x, Line.Z$y, lwd=2)
+    segments(Line.X$x, Line.X$y, Line.Y$x, Line.Y$y, lwd=2)
+    points(Line.W$x, Line.W$y, pch=20, col="darkorchid1")
+    points(Line.X$x, Line.X$y, pch=20, col="deepskyblue2")
+    points(Line.Y$x, Line.Y$y, pch=20, col="darkorange")
+    points(Line.Z$x, Line.Z$y, pch=20, col="red")
+  }
+}
+
+Line.W <- Poly.Line(4,9)
+Line.X <- Poly.Line(3,4)
+Line.Y <- Poly.Line(20,4)
+Line.Z <- Poly.Line(5,5)
+polygon.lines(Line.W, Line.X, Line.Y, Line.Z)
+
+
+#8  Create a canvas object that the add function can add point, line, circle, and polygon objects to.
+#   Write plot and print methods for this class.
+
+
+#so I need to create a canvas object...what is a canvas object?
+#something that means it will be overarching? cover multiple things?
+
+#what do all these objects have in common?
+#they all have some sort of coordinates...but what a bout the circle. how does that work?
+#just try and we will see what we need to alter later
+
+#so all these have coordinates in common, i.e. (x,y), just like points
+#remember an object is nothing but a variable and in our case we want this variable to have a class.
+
+#I wrote this canvas function thinking about it as all of our canvas objects have an x,y in common
+#with just an x and y we can generate a point, a line, and lines of a polygon
+#the only extra tidbit needed would be for a circle where we need to include something such as a radius...so I put in the ...
+# the ... gives us the freedom to add additional arguments to our class objects
+
+
+canvas.class <- function(x,y,...){
+  output <- list(x=x, y=y, ...=...)
+  class(output) <- "canvas.object"
+  return(output)
+}
+
+
+circleA.test <- canvas.class(x=1,y=1,r=.25)
+polylineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
+
+
+#print.function
+print.canvas <- function(objects.cors,...){
+  if(length(objects.cors) < 2){
+    cat("Please recheck your input.")
+  }
+  if(length(objects.cors) == 2){
+    cat("For this object, x = ",objects.cors$x,"and y = ",objects.cors$y,",are the coordinates.\n")  
+  }
+  if(length(objects.cors) == 3){
+    cat("For this circle, x = ",objects.cors$x,", y = ", objects.cors$y,"and r = ", objects.cors$r,"are the coordinates.\n")
+  }
+  if(length(objects.cors) == 4){
+    cat("For this line, x1 =" ,objects.cors$x, ", y1 =", objects.cors$y, "and x2 =", objects.cors$x2, ", y2 =" , objects.cors$y2, "are the coordinates.\n")
+    }else{
+      xcor<- c(objects.cors$x, objects.cors$x2, objects.cors$x3, objects.cors$x4)
+      ycor <- c(objects.cors$y, objects.cors$y2, objects.cors$y3, objects.cors$y4)
+      d.f. <- data.frame( xcor, ycor, row.names = c("Point 1", "Point 2", "Point 3", "Point 4"))
+      print(d.f.)
+  }
+}
+
+#assigning multiple inheritence
+
+lineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
+print.canvas(polylineA.test)
+
+MultInher.tex <- c(x=1, y=1, x2=2, y2=2)
+class(MultInher.tex) <- c("line", "canvas.object")  #assigned to two classes! #trying to do this so I can use plot
+
+
+
+circleA.test <- canvas.class(x=1,y=1,r=.25)
+print.canvas(circleA.test)
+
+lineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
+print.canvas(polylineA.test)
+
+Polylines.test <- canvas.class(x=1, y=1, x2=2, y2=2, x3=3, y3=3, x4=4, y4=4)
+print.canvas(Polylines.test)
+
+Line.W <- Poly.Line(4,9)
+Line.X <- Poly.Line(3,4)
+Line.Y <- Poly.Line(20,4)
+Line.Z <- Poly.Line(5,5)
+
+#plot function
+
+plot.canvas <- function(objects.cors,...){
+  if(length(objects.cors) == 4){
+    if(!inherits(start.point, 'line') | !inherits(end.point, 'line'))
+    plot.line(Obj.line.point1, Obj.line.point2)
+    }
+  }
+  
+
+Obj.line.point1 <- canvas.class(5,4)
+class(Obj.line.point1) <- c("line", "canvas.object")
+Obj.line.point2 <- canvas.class(8,5)
+class(Obj.line.point2) <- c("line", "canvas.object")
+
+plot.canvas(Obj.line.point1, Obj.line.point2)
+ 
+plot.canvas(Obj.line.point1)  
+  
+  
+  
+  
+}
+
+
+Line.W <- Poly.Line(4,9)
+Line.X <- Poly.Line(3,4)
+Line.Y <- Poly.Line(20,4)
+Line.Z <- Poly.Line(5,5)
+
+
+xcor<- c(Line.W$x, Line.X$x, Line.Y$x, Line.Z$x)
+ycor <- c(Line.W$y, Line.X$y, Line.Y$y, Line.Z$y)
+d.f. <- data.frame( xcor, ycor, row.names = c("Line W", "Line X", "Line Y", "Line Z"))
 
 
