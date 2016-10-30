@@ -232,19 +232,22 @@ print.point(pointB)
 #method
 dist.method <- function(pointA, pointB, ...){
   if(!inherits(pointA, 'point') | !inherits(pointB, 'point'))
-    stop("WARNING: You have not given me two points to work with!!!")
+    stop(noquote("WARNING: You have not given me two points to work with!!!"))
   xSQ <- (pointB$x - pointA$x)^2
   ySQ <- (pointB$y - pointA$y)^2
   Dist <- round(sqrt(xSQ+ySQ), digits=1)
   if(Dist !=0){
-    print("The distance between the two points is....")
+    print(noquote("The distance between the two points is...."))
     return(Dist)
   } 
-  print("Warning: Distance between two points was zero. You should really look into this!\n")
+  print(noquote("Warning: Distance between two points was zero. You should really look into this!\n"))
   return(Dist)
 }
 
 dist.method(pointA, pointB)
+
+pointA <- new.point(1, 9)
+pointB <- new.point(4, 3)
 
 #Looks like this works (AND THE CROWD GOES WILD)
 
@@ -254,4 +257,63 @@ dist.method(pointA, pointB)
 #dist.method(pointA, pointB)
 # [1] "Warning: Distance between two points was zero. You should really look into this!\n"
 # [1] 0
+
+
+
+
+#4 Implement a line class that takes two point objects and makes a line between them.
+
+#inputs is SL (startline), EL (endline)
+
+#we already have a point class(so we can use this to make our points "points")
+
+new.line <- function(x, y){
+  output <- list(x=x, y=y)
+  class(output) <- "line"
+  return(output)
+}
+
+start.point <- new.line(1, 9)
+end.point <- new.line(4, 3)
+
+  
+  
+plot.line <- function(start.point, end.point, ...){
+    if(!inherits(start.point, 'line') | !inherits(end.point, 'line')) {
+      stop(noquote("Something is not write, recheck your classes!!!"))
+  } else{
+      plot(NA, xlim=c(0,(end.point$x*(2*(end.point$x)))), ylim=c(0,(end.point$y*(2*(end.point$x)))), xlab="x", ylab="y")
+      segments(start.point$x, start.point$y, end.point$x, end.point$y)
+      points(start.point$x, start.point$y, pch=15, col="red")
+      points(end.point$x, end.point$y, pch=15, col="blue")
+  }
+}
+ 
+#Testing it out 
+start.point <- new.line(1, 9)
+end.point <- new.line(4, 3)
+
+plot.line(start.point, end.point)
+
+#This is awesomse so I'm testing it again!
+start.point3 <- new.line(15, 15)
+end.point4 <- new.line(10, 2)
+
+plot.line(start.point3, end.point4)
+
+start.point5 <- new.line(50, 100)
+end.point6 <- new.line(30, 50)
+
+plot.line(start.point5, end.point6)
+
+
+#Talk to will about what he would do for the y and x lim on the presetup
+
+
+
+
+
+
+
+
 
