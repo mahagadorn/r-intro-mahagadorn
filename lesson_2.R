@@ -637,17 +637,40 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 
 #right now we have 2 function
 
-Abd.Sp.Sim #will give us abundance per site
+ListofSpecies <- read.csv("/Users/Mal/Documents/ProgrammingClass/r-intro-mahagadorn/ListofSpecies.csv", sep = ",", header=TRUE)
 
 
-SpeciesA <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 20))
-SpeciesB <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 50))
-SpeciesC <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 10))
-SpeciesD <- c(Abd.Sp.Sim (prob = 1, n=5, lambda = 50))
-SpeciesE <- c(Abd.Sp.Sim (prob = .5, n=5, lambda = 2))
+#First we need to calculate the probability and abundance by site??
+#step one is you have to figure out how many rows are in the datafile you are working with
+
+Prob.Ab.Sp <- function(ListofSpecies){
+  numbSp <- nrow(ListofSpecies)
+  for(i in numbSp){
+    Ind.Species <- ListofSpecies[i,1]       #saying species Name
+    Ind.Prob <- ListofSpecies[i,2]      #Individual Probabilities
+    Ind.Lamba <- ListofSpecies[i,3]
+    (Num.Sites <- ListofSpecies[i,4])
+    if(Num.Sites<1){
+      return("You don't have the number of sites listed")
+    }
+    if(Num.Sites==1){
+      Spp.Abund <- Abd.Sp.Sim(prob = Ind.Prob, n = 1, lambda = Ind.Lamba)
+      Data <- data.frame(Ind.Species, Spp.Abund)
+      return(Data)
+    } else {
+      for (i in i:Num.Sites) {
+        Spp.Abund <- Abd.Sp.Sim(prob = Ind.Prob, n = Num.Sites, lambda = Ind.Lamba)
+        Data <- data.frame(Ind.Species, Spp.Abund)
+      }
+      return(Data)
+    }
+  }
+}
 
 
 
+
+SpeciesDATA.TEST <- Prob.Ab.Sp(ListofSpecies)
 
 
 
