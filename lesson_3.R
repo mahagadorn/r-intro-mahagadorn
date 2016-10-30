@@ -292,22 +292,26 @@ plot.line <- function(start.point, end.point, ...){
 #Testing it out 
 start.point <- new.line(1, 9)
 end.point <- new.line(4, 3)
-
 plot.line(start.point, end.point)
 
 #This is awesomse so I'm testing it again!
 start.point3 <- new.line(15, 15)
 end.point4 <- new.line(10, 2)
-
 plot.line(start.point3, end.point4)
 
 start.point5 <- new.line(50, 100)
 end.point6 <- new.line(30, 50)
-
 plot.line(start.point5, end.point6)
 
 
 #Talk to will about what he would do for the y and x lim on the presetup
+
+
+
+
+
+
+
 
 
 
