@@ -639,8 +639,7 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 sim.comm <- function(spp.lam, spp.p, spp.names, n.sites){
   sim.results <- matrix(NA, nrow = length(spp.names), ncol = max(n.sites))
   for (i in 1:length(spp.names)){
-    Spp.Abund[[i]] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam)    #
-    sim.results[[i,]] <- c(Spp.Abund[i])
+    sim.results[i,] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam)
   }
   dimnames<- list(spp.names, 1:length(n.sites))
   sim.results <- matrix(sim.results, dimnames = dimnames) 
@@ -654,6 +653,8 @@ spp.lam <- c(23,33,12,4,15)
 n.sites <- c(5,5,5,5,5)
 
 sim.comm(spp.lam, spp.p, spp.names, n.sites)
+
+
 
 # Error in Spp.Abund[[i]] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam) : 
 # object 'Spp.Abund' not found
