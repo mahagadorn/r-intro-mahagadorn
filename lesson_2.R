@@ -575,11 +575,6 @@ ArbBox(lets = c("w","d","p"), height = 3, width = 9, text = "hey")
 #we want to use rbinom because it generates random diviates
 
 
-
-#Poisson --> qnorm
-#qpois(p=Vec207, lambda = lhat, lower.tail = TRUE, log.p = FALSE)
-
-
 Prob.Presence <- function(prob){     #Prob.Presence <- function(n, size, prob) was the former...removed args n and size because they remain contant-user doesnt need to adjust these??? right?
   res.rbinom<-rbinom(n=1, size=1, prob = prob)    #n=number of observations-so 1, size=number of trials (see above but Bernoulli--one trial generates a new distribution--so one here)
   return(res.rbinom)
@@ -603,7 +598,7 @@ Prob.Presence(prob = 0)  #Always zero!
 Abd.Sp.Sim <- function(prob, n, lambda){      #is the number of sites, lambda=mean of a vector (or mean of abundances)
   prob.of.pres <- Prob.Presence(prob = prob)
   if(prob.of.pres!=1){                    #meaning the species is present!
-    print("Species not Present")
+    return(0)
   } else {
     abundance<- rpois(n=n, lambda = lambda)
     return(abundance)
@@ -637,41 +632,31 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 
 #right now we have 2 function
 
-ListofSpecies <- read.csv("/Users/Mal/Documents/ProgrammingClass/r-intro-mahagadorn/ListofSpecies.csv", sep = ",", header=TRUE)
-
 
 #First we need to calculate the probability and abundance by site??
 #step one is you have to figure out how many rows are in the datafile you are working with
 
-Prob.Ab.Sp <- function(ListofSpecies){
-  numbSp <- nrow(ListofSpecies)
-  for(i in numbSp){
-    Ind.Species <- ListofSpecies[i,1]       #saying species Name
-    Ind.Prob <- ListofSpecies[i,2]      #Individual Probabilities
-    Ind.Lamba <- ListofSpecies[i,3]
-    (Num.Sites <- ListofSpecies[i,4])
-    if(Num.Sites<1){
-      return("You don't have the number of sites listed")
-    }
-    if(Num.Sites==1){
-      Spp.Abund <- Abd.Sp.Sim(prob = Ind.Prob, n = 1, lambda = Ind.Lamba)
-      Data <- data.frame(Ind.Species, Spp.Abund)
-      return(Data)
-    } else {
-      for (i in i:Num.Sites) {
-        Spp.Abund <- Abd.Sp.Sim(prob = Ind.Prob, n = Num.Sites, lambda = Ind.Lamba)
-        Data <- data.frame(Ind.Species, Spp.Abund)
-      }
-      return(Data)
-    }
+sim.comm <- function(spp.lam, spp.p, spp.names, n.sites){
+  sim.results <- matrix(NA, nrow = length(spp.names), ncol = max(n.sites))
+  for (i in 1:length(spp.names)){
+    Spp.Abund[[i]] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam)    #
+    sim.results[[i,]] <- c(Spp.Abund[i])
   }
+  dimnames<- list(spp.names, 1:length(n.sites))
+  sim.results <- matrix(sim.results, dimnames = dimnames) 
+  return(sim.results)
 }
 
 
+spp.names <- c("O. taurus", "O. pennsylvanicus", "O. hecate", "P. vindex", "B. stercorosus")
+spp.p <- c(1,.5,.5,.5,1)
+spp.lam <- c(23,33,12,4,15)
+n.sites <- c(5,5,5,5,5)
 
+sim.comm(spp.lam, spp.p, spp.names, n.sites)
 
-SpeciesDATA.TEST <- Prob.Ab.Sp(ListofSpecies)
-##ONLY GENERATES THE ABUNDANCES FOR SPECIES E
+# Error in Spp.Abund[[i]] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam) : 
+# object 'Spp.Abund' not found
 
 
 
@@ -697,20 +682,21 @@ Desert.Walk.Sim <- function(num.its, TI){
   xcor <- c(0, xcor)                                                        #added a zero here to make an origin
   ycor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
   ycor <- c(0, ycor)                                                        #again origin
-  coor.bytime <<- cbind(Time,xcor,ycor)                                     #generate a matrix HINT the <<- instead of <- saves it to the global environment 
+  coor.bytime <- cbind(Time,xcor,ycor)                                     #generate a matrix HINT the <<- instead of <- saves it to the global environment 
   sum.xcor <- cumsum(xcor)
   sum.ycor <- cumsum(ycor)
   for (i in Time) {
     Last.sumxcor <- lastnumber<-tail((sum.xcor), n=1)
     Last.sumycor <- lastnumber<-tail((sum.ycor), n=1)
-    DistancePlot <- plot(sum.xcor,sum.ycor, type = "l", lty=2, 
+  }  
+    DistancePlot <- plot(sum.xcor,sum.ycor, type = "l", lty=2,     ####Take it out of the for loop
                          xlab = "Longitude Coordinate",
                          ylab = "Latitude Coordinate",
                          main = "Similated Path for Lost Collegue")
     points(0,0, col="darkorchid1", pch=15, cex=1.25)                      #points is awesome...it adds them after the fact.
     points(Last.sumxcor, Last.sumycor, col="blue", pch=17, cex=1.25)
-  }
-} 
+    return(coor.bytime)
+}
 
 
 Desert.Walk.Sim(100,5)

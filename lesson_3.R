@@ -221,17 +221,31 @@ print.point <- function(x,...){
   cat("For this point,",x$x,"and",x$y,",are the coordinates.\n")
 }
 
-pointA <- new.point(1, 9)
-pointB <- new.point(4, 3)
-print.point(pointA)
-print.point(pointB)
+point1 <- new.point(1,5)
+point2 <- new.point(6,8)
+point3 <- new.point(4,6)
+point4 <- new.point(10,2)
+point5 <- new.point(6,2)
+point6 <- new.point(11,0)
+
+
+print.point(point1)
+print.point(point2)
+
+#point method
+
+plot.point <- function(point,...){
+  plot(point$x, point$y, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+}
+
+plot.point(p1)
 
 
 #3) Write a distance method that calculates the distance between two points in space. 
 
 #method
-dist.method <- function(pointA, pointB, ...){
-  if(!inherits(pointA, 'point') | !inherits(pointB, 'point'))
+dist.method <- function(point1, point2, ...){
+  if(!inherits(point1, 'point') | !inherits(point2, 'point'))
     stop(noquote("WARNING: You have not given me two points to work with!!!"))
   xSQ <- (pointB$x - pointA$x)^2
   ySQ <- (pointB$y - pointA$y)^2
@@ -267,40 +281,32 @@ pointB <- new.point(4, 3)
 #no make new
 
 #Make the class
-new.line <- function(x, y){
-  output <- list(x=x, y=y)
+new.line <- function(pointA, pointB){
+  if(!inherits(pointA, 'point') | !inherits(pointA, 'point')) {
+    stop(noquote("Something is not right, recheck your classes!!!"))
+  }
+  output <- list(pointA=pointA, pointB=pointB)
   class(output) <- "line"
   return(output)
 }
 
+Line1 <- new.line(point1, point2)
+Line2 <- new.line(point1, point3)
+Line3 <- new.line(point2, point3)
+Line4 <- new.line(point4, point5)  #plotted
+Line5 <- new.line(point4, point6)
+Line6 <- new.line(point5, point6)
+
 #method for plotting the line 
-plot.line <- function(start.point, end.point, ...){
-    if(!inherits(start.point, 'line') | !inherits(end.point, 'line')) {
-      stop(noquote("Something is not right, recheck your classes!!!"))
-  } else{
-      plot(NA, xlim=c(0,(end.point$x*(2*(end.point$x)))), ylim=c(0,(end.point$y*(2*(end.point$x)))), xlab="x", ylab="y")
-      segments(start.point$x, start.point$y, end.point$x, end.point$y)
-      points(start.point$x, start.point$y, pch=15, col="red")
-      points(end.point$x, end.point$y, pch=15, col="blue")
-  }
+plot.line <- function(Line, ...){
+  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+  segments(Line$pointA$x, Line$pointA$y, Line$pointB$x, Line$pointB$y)
 }
- 
-#Testing it out 
-start.point <- new.line(1, 9)
-end.point <- new.line(4, 3)
-plot.line(start.point, end.point)
 
-#This is awesomse so I'm testing it again!
-start.point3 <- new.line(15, 15)
-end.point4 <- new.line(10, 2)
-plot.line(start.point3, end.point4)
+#Testing this out
+plot.line(Line1)
+plot.line(Line2)
 
-start.point5 <- new.line(50, 100)
-end.point6 <- new.line(30, 50)
-plot.line(start.point5, end.point6)
-
-
-#Talk to will about what he would do for the y and x lim on the presetup
 
 
 
@@ -308,49 +314,30 @@ plot.line(start.point5, end.point6)
 #  load of lines.
 
 
-Poly.Line <- function(x, y){
-  output <- list(x=x, y=y)
-  class(output) <- "Polygon Line"
+new.polygon <- function(Line1, Line2, Line3,...){
+  if(!inherits(Line1, 'line') | !inherits(Line2, 'line') | !inherits(Line3, 'line')) {
+    stop(noquote("Something is not right, recheck your classes!!!"))
+  }
+  output <- list(Line1=Line1, Line2=Line2, Line3=Line3)
+  class(output) <- "line"
   return(output)
 }
 
+polygon1 <- new.polygon(Line1, Line2, Line3)
+polygon2 <- new.polygon(Line4, Line5, Line6)
 
-Line.W <- Poly.Line(1,1)
-Line.X <- Poly.Line(1,4)
-Line.Y <- Poly.Line(4,4)
-Line.Z <- Poly.Line(4,1)
 
 
 #method for plotting the line 
-polygon.lines <- function(Line.W, Line.X, Line.Y, Line.Z, ...){
-  if(!inherits(Line.W, 'Polygon Line') | !inherits(Line.X, 'Polygon Line') | !inherits(Line.Y, 'Polygon Line') | !inherits(Line.Z, 'Polygon Line')) {
-    stop(noquote("Oops, you can't generate a Polygon with those inputs!!!"))
-  } else{
-    plot(NA, xlim=c(0,(Line.Z$x*(2*(Line.Z$x)))), ylim=c(0,(Line.X$y*(2*(Line.X$x)))), xlab="x", ylab="y")
-    segments(Line.W$x, Line.W$y, Line.X$x, Line.X$y, lwd=2)
-    segments(Line.Y$x, Line.Y$y, Line.Z$x, Line.Z$y, lwd=2)
-    segments(Line.W$x, Line.W$y, Line.Z$x, Line.Z$y, lwd=2)
-    segments(Line.X$x, Line.X$y, Line.Y$x, Line.Y$y, lwd=2)
-    points(Line.W$x, Line.W$y, pch=20, col="darkorchid1")
-    points(Line.X$x, Line.X$y, pch=20, col="deepskyblue2")
-    points(Line.Y$x, Line.Y$y, pch=20, col="darkorange")
-    points(Line.Z$x, Line.Z$y, pch=20, col="red")
-  }
-}
+plot.polygon <- function(polygon,...){
+  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+  segments(polygon$Line1$pointA$x, polygon$Line1$pointA$y, polygon$Line1$pointB$x, polygon$Line1$pointB$y)
+  segments(polygon$Line2$pointA$x, polygon$Line2$pointA$y, polygon$Line2$pointB$x, polygon$Line2$pointB$y)
+  segments(polygon$Line3$pointA$x, polygon$Line3$pointA$y, polygon$Line3$pointB$x, polygon$Line3$pointB$y)
+} 
 
-
-polygon.lines(Line.W, Line.X, Line.Y, Line.Z)
-
-
-Line.W.2 <- Poly.Line(2,1)
-Line.X.2 <- Poly.Line(3,4)
-Line.Y.2 <- Poly.Line(4,4)
-Line.Z.2 <- Poly.Line(4,1)
-
-
-polygon.lines(Line.W.2, Line.X.2, Line.Y.2, Line.Z.2)
-
-#holy cow dung it work!!! AWESOME!!!!
+plot(polygon1)
+plot(polygon2)
 
 
 
