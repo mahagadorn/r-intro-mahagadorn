@@ -247,14 +247,25 @@ replicate.ND
 
 #2
 
-mah.summary <- function(object, )
+mah.summary <- function(object, digits, ...){
+  data <- object
+  mean <- mean(object)
+  std.dev <- sd(object)
+  minimum <- min(object)
+  maximum <- max(object)
+  summary <- c(mean, std.dev, minimum, maximum)
+  titles <- c("mean", "std.dev", "minumum", "maximum")
+  summary <-(summary)
+  return(summary)
+}
+
+mah.summary(vect.1)
+
+vect.1 <- 1:10
 
 
 
-
-
-
-
+meanX <- mean(vect.1)
 
 
 
