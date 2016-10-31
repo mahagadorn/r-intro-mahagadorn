@@ -208,6 +208,10 @@ print.cat <- function(x,...){
 print.cat(tonks)
 
 
+
+
+
+
 #2) Implement a point class that holds x and y information for a point in space.
 #function
 new.point <- function(x, y){
@@ -238,7 +242,7 @@ plot.point <- function(point,...){
   plot(point$x, point$y, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
 }
 
-plot.point(p1)
+plot.point(point1)
 
 
 #3) Write a distance method that calculates the distance between two points in space. 
@@ -247,8 +251,8 @@ plot.point(p1)
 dist.method <- function(point1, point2, ...){
   if(!inherits(point1, 'point') | !inherits(point2, 'point'))
     stop(noquote("WARNING: You have not given me two points to work with!!!"))
-  xSQ <- (pointB$x - pointA$x)^2
-  ySQ <- (pointB$y - pointA$y)^2
+  xSQ <- (point2$x - point1$x)^2
+  ySQ <- (point2$y - point1$y)^2
   Dist <- round(sqrt(xSQ+ySQ), digits=1)
   if(Dist !=0){
     print(noquote("The distance between the two points is...."))
@@ -258,10 +262,7 @@ dist.method <- function(point1, point2, ...){
   return(Dist)
 }
 
-dist.method(pointA, pointB)
-
-pointA <- new.point(1, 9)
-pointB <- new.point(4, 3)
+dist.method(point1, point2)
 
 #Looks like this works (AND THE CROWD GOES WILD)
 
@@ -281,11 +282,11 @@ pointB <- new.point(4, 3)
 #no make new
 
 #Make the class
-new.line <- function(pointA, pointB){
-  if(!inherits(pointA, 'point') | !inherits(pointA, 'point')) {
+new.line <- function(point1, point2){
+  if(!inherits(point1, 'point') | !inherits(point2, 'point')) {
     stop(noquote("Something is not right, recheck your classes!!!"))
   }
-  output <- list(pointA=pointA, pointB=pointB)
+  output <- list(point1=point1, point2=point2)
   class(output) <- "line"
   return(output)
 }
@@ -300,7 +301,7 @@ Line6 <- new.line(point5, point6)
 #method for plotting the line 
 plot.line <- function(Line, ...){
   plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
-  segments(Line$pointA$x, Line$pointA$y, Line$pointB$x, Line$pointB$y)
+  segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
 #Testing this out
@@ -331,16 +332,18 @@ polygon2 <- new.polygon(Line4, Line5, Line6)
 #method for plotting the line 
 plot.polygon <- function(polygon,...){
   plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
-  segments(polygon$Line1$pointA$x, polygon$Line1$pointA$y, polygon$Line1$pointB$x, polygon$Line1$pointB$y)
-  segments(polygon$Line2$pointA$x, polygon$Line2$pointA$y, polygon$Line2$pointB$x, polygon$Line2$pointB$y)
-  segments(polygon$Line3$pointA$x, polygon$Line3$pointA$y, polygon$Line3$pointB$x, polygon$Line3$pointB$y)
+  segments(polygon$Line1$point1$x, polygon$Line1$point1$y, polygon$Line1$point2$x, polygon$Line1$point2$y)
+  segments(polygon$Line2$point1$x, polygon$Line2$point1$y, polygon$Line2$point2$x, polygon$Line2$point2$y)
+  segments(polygon$Line3$point1$x, polygon$Line3$point1$y, polygon$Line3$point2$x, polygon$Line3$point2$y)
 } 
 
-plot(polygon1)
-plot(polygon2)
+plot.polygon(polygon1)
+plot.polygon(polygon2)
 
 
-
+##################################################################
+##################################################################
+################################################################## MAH FIX THIS
 #6 Write plot methods for point and line objects.
 
 #I think I already did this above so copy paste
