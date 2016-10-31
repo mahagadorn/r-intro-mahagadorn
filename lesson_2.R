@@ -637,20 +637,21 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 #step one is you have to figure out how many rows are in the datafile you are working with
 
 sim.comm <- function(spp.lam, spp.p, spp.names, n.sites){
-  sim.results <- matrix(NA, nrow = length(spp.names), ncol = max(n.sites))
+  sim.results <- matrix(NA, nrow = length(spp.names), ncol = n.sites)
   for (i in 1:length(spp.names)){
-    sim.results[i,] <- Abd.Sp.Sim(prob = spp.p, n = n.sites, lambda = spp.lam)
+      sim.results[i,] <- Abd.Sp.Sim(prob = spp.p[i], n = n.sites[i], lambda = spp.lam[i])
   }
-  dimnames<- list(spp.names, 1:length(n.sites))
-  sim.results <- matrix(sim.results, dimnames = dimnames) 
+  rownames(sim.results) <- spp.names
+  colnames(sim.results) <- 1:n.sites
   return(sim.results)
 }
 
+sim.comm(c(3, 5, 7), c(.1, .4, .2), c("dave", "barry", "smith"), 5)
 
 spp.names <- c("O. taurus", "O. pennsylvanicus", "O. hecate", "P. vindex", "B. stercorosus")
 spp.p <- c(1,.5,.5,.5,1)
 spp.lam <- c(23,33,12,4,15)
-n.sites <- c(5,5,5,5,5)
+n.sites <- 5
 
 sim.comm(spp.lam, spp.p, spp.names, n.sites)
 
