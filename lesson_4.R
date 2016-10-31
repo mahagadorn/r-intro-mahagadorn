@@ -121,9 +121,102 @@ lapply(input, length)
   apply(input, 2, sum)
   # [1] 3 7
   
+#' REMINDER A DATA FRAME IS JUST A LIST!!!!
+#' YOU CAN NOT USE APPLY ON A DATA FRAME!!!
+#' SINCE A DATA FRAME IS JUST A LIST ONLY USE SAPPLY OR LAPPLY TO EACH COLUMN OF THE DATA.FRAME
+#' 
+#' This makes sense....why
+      #' because a dataframe may contain rows and columns of a different data type
+      #' This is why apply won't work
+      #' you cant apply something to the rows of a data.frame columns of a different data type
+      #' 
+      #' so for DF just use sapply or lapply
+      #' think about it you cant apply() mean to a data.frame with categorical and numerical data
+      #' just remember that a data.frame is nothing but a list that someone assigned CLASS "data.frame" to
+
   
   
+#' tapply---takes an input vector that you want grouped in some way (according to another vector) and then applies your function to those groups
+
   
+  input <- 1:10     #just a sequence of numbers 
+  grouping <- rep(letters[1:2], 5)    #repeats a and b consecutively five times  [1] "a" "b" "a" "b" "a" "b" "a" "b" "a" "b"
+  tapply(input, grouping, sum)
+  
+  # a  b 
+  #25 30 
+  
+
+  
+#'Quick Summary
+
+  
+  #'apply ---intended to be applied over any array; use matrix...matrix is nothing but a 2D array, so specify the dementions along with what you want your input sliced and what function you want applied
+  #'lapply---applies your function and returns a list
+  #'sapply---applies function and returns a similified version of whatever return value it gets (aka if every element of your input vector is of length one, then you will get a vector returned)
+          #' if everything returned is of the same length and type then you will get a matrix
+          #' if its a combination of lengths and types then you will get a list
+  #'vapply---This returns a vector of whatever TYPE you SPECIFY; slightly safer than sapply...because you have to specify what you want to get back
+  #'mapply---This takes two or more inputs and applies a function to both of them
+          #' Hence, you can put in any number of input variables and since this is the case the function has to come first!!!!
+  #'tapply---takes an input vector that you want to be grouped in someway, matches it against a grouping vector, and then applies the function based on the grouping
+
+  
+
+#' 4.2.3 Why apply an not aapply
+  #' Why use apply families?
+  #' BECAUSE THEY ARE FAST
+  #' you can write a loop to do the same thing...but that takes time and they are slower to run
+ 
+#' R' is a functional language
+#' This means that onces your data are in vector format you can tell it to apply something to all the elements of that vector
+    #' It will do so using FAST, INTERNAL, PRE-COMPILED code (bytecode) to do everything much quicker than in pure R
+#' This means that you should start approaching your questions perhaps differently
+    #' start thinking functionally
+    #' break down your problems into smaller elements that can be written as some sort of vector or matrix
+    #' Then you can use apply function() and everything will be much faster
+
+#'Tidyvrese' and plyr package
+#'avoid these
+#' they make it easier to move  things from one type of data to another
+#' but this can be computationally expensive and time consuming
+#'functions are aapply and dapply  
+
+#'JUST THINK ABOUT YOUR PROBLEM FIRST!!!!!
+#'Think about the elements that make up the whole and approach it that way
+
+  
+  
+#' 4.3 Lambda calculus and parallel execution
+  #'  λ-calculus== is a fomalized way of writing mathematical statements about functions
+  #'  in λ-calculus, functions are just as reall as the numbers, therefore, they can be manipulated and transformed
+  #'  R IS DESIGNED TO OPERATE EXACTLY THIS WAY
+  #'  which makes it rediculously fast when you use it right, but super slow when you dont
+
+#' λ functions (sometimes called anonymous functions) --are functions that arent given a names that you can call
+#' in R functions are first-class objects--you can treat them and examine them as you can any object (try calling str(ls) to examine ls function, or print (ls) to see its code) 
+#' All you have to do to use a "λ function" is just not assign the function to a variable using <-
+
+  
+  input<-1:10
+  grouping<-rep(letters[1:2], 5)
+  tapply(input, grouping, function(x) sd(x)/sqrt(length(x)))
+  #       a        b 
+  #1.414214 1.414214 
+  
+  #'Here we just didnt give λ  function a name, but if we did it would be std.err.mean
+  #'Because functions are first-class objects that can be manipulated, we can 
+        #'pass around functions as if they were objects
+        #'use them
+        #'and even manupulate those functions
+
+  safe.apply <- function(x, func){
+    not.nas <- Negate(is.na(x))(x)
+    x[not.nas] <- func(x[not.nas])
+    return(x)
+  }
+  
+  safe.apply(c(1,3,5,7,NA,1), function(x) return(x*2))
   
   
   
