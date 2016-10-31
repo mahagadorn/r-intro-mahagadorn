@@ -229,12 +229,25 @@ lapply(input, length)
 
 
 
+  ################################################
+  ## Exercises ###################################
+  ################################################
+
+#1
+
+# replicate is an important function that allows you to quickly generate random numbers. Use it to create
+# a dataset of 10 variables, each drawn from a Normal distribution with different means and variances. This
+# can be achieved in one line.
+
+replicate.ND <- replicate(n=10, expr = (rnorm(n=1, mean = runif(1, 0, 10), sd=runif(1,0,10))))
+replicate.ND
+# [1] 10.0110605  7.5311863  0.9651123 -4.7743675  4.2562584 19.8118805 -4.3861979  4.6335966  8.7364025
+# [10]  9.6896448
 
 
+#2
 
-
-
-
+mah.summary <- function(object, )
 
 
 
