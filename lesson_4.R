@@ -247,25 +247,32 @@ replicate.ND
 
 #2
 
-mah.summary <- function(object, digits){
-  data <- object
-  mean <- mean(object)
-  std.dev <- sd(object)
-  minimum <- min(object)
-  maximum <- max(object)
-  summary <- c(mean, std.dev, minimum, maximum)
-  titles <- c("mean", "std.dev", "minumum", "maximum")
-  summary <-(summary)
-  return(summary)
+x <- replicate(n=10, expr = (rnorm(n=10, mean = runif(1, 0, 10), sd=runif(1,0,10))))
+
+mah.summary <- function(data.input, digits...){
+  sum.output <- matrix(NA, nrow = 1, ncol = ncol(x))
+  x <-  data.input
+  # sum.stats <- c("sum", "mean", "std.dev", "minumum", "maximum")
+  for (i in 1:ncol(x)){
+    sum.output[,i] <- apply(x, 2, sum)
+  }
+  return(sum.output)
 }
 
-mah.summary(vect.1)
+mah.summary(x, digits=2)  
+#When just i on sum.sats Error in sum.output[, i] <- apply(x, 2, sum) : number of items to replace is not a multiple of replacement length
 
-vect.1 <- 1:10
+mah.summary <- function(data.input, digits...){
+  sum.output <- matrix(NA, nrow = 1, ncol = ncol(x))
+  x <-  data.input
+  # sum.stats <- c("sum", "mean", "std.dev", "minumum", "maximum")
+  for (i in 1:ncol(x)){
+    sum.output[,i] <- apply(x[i], 2, sum)
+  }
+  return(sum.output)
+}
 
-
-
-meanX <- mean(vect.1)
+mah.summary(x, digits=2) # Error in apply(x[i], 2, sum) : dim(X) must have a positive length
 
 
 

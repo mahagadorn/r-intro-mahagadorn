@@ -639,7 +639,7 @@ Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
 sim.comm <- function(spp.lam, spp.p, spp.names, n.sites){
   sim.results <- matrix(NA, nrow = length(spp.names), ncol = n.sites)
   for (i in 1:length(spp.names)){
-      sim.results[i,] <- Abd.Sp.Sim(prob = spp.p[i], n = n.sites[i], lambda = spp.lam[i])
+      sim.results[i,] <- Abd.Sp.Sim(prob = spp.p[i], n = n.sites, lambda = spp.lam[i])
   }
   rownames(sim.results) <- spp.names
   colnames(sim.results) <- 1:n.sites
@@ -653,7 +653,7 @@ spp.p <- c(1,.5,.5,.5,1)
 spp.lam <- c(23,33,12,4,15)
 n.sites <- 5
 
-sim.comm(spp.lam, spp.p, spp.names, n.sites)
+sim.comm(c(23,33,12,4,15), c(1,.5,.5,.5,1), c("O. taurus", "O. pennsylvanicus", "O. hecate", "P. vindex", "B. stercorosus"), 5)
 
 
 
