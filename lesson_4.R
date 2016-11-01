@@ -241,43 +241,84 @@ lapply(input, length)
 
 replicate.ND <- replicate(n=10, expr = (rnorm(n=10, mean = runif(1, 0, 10), sd=runif(1,0,10))))
 replicate.ND
-# [1] 10.0110605  7.5311863  0.9651123 -4.7743675  4.2562584 19.8118805 -4.3861979  4.6335966  8.7364025
-# [10]  9.6896448
+#matrix returned containing the values
 
 
 #2
 
-x <- replicate(n=10, expr = (rnorm(n=10, mean = runif(1, 0, 10), sd=runif(1,0,10))))
-
-mah.summary <- function(data.input, digits...){
-  sum.output <- matrix(NA, nrow = 1, ncol = ncol(x))
-  x <-  data.input
-  # sum.stats <- c("sum", "mean", "std.dev", "minumum", "maximum")
-  for (i in 1:ncol(x)){
-    sum.output[,i] <- apply(x, 2, sum)
-  }
-  return(sum.output)
+mah.summary <- function(x){
+  sum.output <- matrix(NA, nrow = ncol(x), ncol = 5)
+  sum <- apply(x, 2, sum)
+  mean <- apply(x, 2, mean)
+  std.dev <- apply(x, 2, sd)
+  min <- apply(x, 2, min)
+  max <- apply(x, 2, max)
+  class <- apply(x, 2, class)
+  sum.output <- cbind(sum, mean, std.dev, min, max, class)
+  plot <- barplot(mean)
+  axis(1, tick=TRUE, pos = -0.2, lty = 1)
+  return(noquote(sum.output))
 }
 
-mah.summary(x, digits=2)  
-#When just i on sum.sats Error in sum.output[, i] <- apply(x, 2, sum) : number of items to replace is not a multiple of replacement length
+mah.summary(replicate.ND)
+#how do you make it recognize digits?
 
-mah.summary <- function(data.input, digits...){
-  sum.output <- matrix(NA, nrow = 1, ncol = ncol(x))
-  x <-  data.input
-  # sum.stats <- c("sum", "mean", "std.dev", "minumum", "maximum")
-  for (i in 1:ncol(x)){
-    sum.output[,i] <- apply(x[i], 2, sum)
+
+#3
+
+sex <- rep(c("male", "female"), times=5)
+year <- rep(c("freshman", "sophmore", "junior", "senior", "graduate"), 2)
+grade <- rep_len(LETTERS[1:4], length.out=10)
+categorical.mat <- matrix(NA, nrow=10, ncol=3)
+categorical.mat <- cbind(sex, year, grade)
+
+
+categ.sum <- function(x){
+  if(is.numeric(x)){
+    return("Data not categorical!")
+  } else{
+    length <- apply(x,2, length)
+    class <- apply(x, 2, class)
+    table.sum <- apply(x, 2, table)
+    results <- list(c(length, class, table.sum))
+    return(results)
   }
-  return(sum.output)
 }
 
-mah.summary(x, digits=2) # Error in apply(x[i], 2, sum) : dim(X) must have a positive length
+#what can I add to make this more useful...I want a plot but how do I specify what I want plotted???
+
+categ.sum(categorical.mat)
+categ.sum(replicate.ND)   #[1] "Data not categorical!" So the if statment is working
 
 
+#4
+
+summary.stats <- function(x){
+  if(is.numeric(x)){
+    return(mah.summary(x))
+  } else {
+    return(categ.sum(x))
+  }
+}
+
+summary.stats(replicate.ND)
+summary.stats(categorical.mat)
 
 
+# 5. A molecular biologist you owe a favour approaches you with a problem. They have a DNA sequence
+# (e.g., ‘ACGATATACGA’) that they need to group into codons (groups of three) and translate into proteins
+# (ignoring all complexities of translation and transcription). Write them a function that will take an
+# arbitrary input sequence and an arbitrary codon lookup table, and output the translated sequence. Hint:
+# expand.grid will help you make a demo lookup table.
 
+
+#expand.grid
+# Create a data frame from all combinations of the supplied vectors or factors. See the description of the return 
+# value for precise details of the way this is done.
+# we need expand.grid will help make a lookup table
+
+
+codon.fun <- function(nt.seq, )
 
 
 

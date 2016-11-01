@@ -384,7 +384,7 @@ year <- c(0:10)
 rain <- seq(50,100, by=5)
 cutmeRain.df <-data.frame(year,rain)
 
-#now we can use the cute to may year a factor
+#now we can use the cut to may year a factor
 yearFact <- cut(as.numeric(as.character(cutmeRain.df$year)), breaks = 2)
 table(yearFact)
 
