@@ -247,14 +247,14 @@ replicate.ND
 #2
 
 mah.summary <- function(x){
-  sum.output <- matrix(NA, nrow = ncol(x), ncol = 5)
+  sum.output <- matrix(NA, nrow = ncol(x), ncol = 5)      #preallocating data matrix
   sum <- apply(x, 2, sum)
   mean <- apply(x, 2, mean)
   std.dev <- apply(x, 2, sd)
   min <- apply(x, 2, min)
   max <- apply(x, 2, max)
-  class <- apply(x, 2, class)
-  sum.output <- cbind(sum, mean, std.dev, min, max, class)
+  class <- apply(x, 2, class)                               #added class for inclusion in function that takes both types of data
+  sum.output <- cbind(sum, mean, std.dev, min, max, class)  #put everything into data matrix
   plot <- barplot(mean)
   axis(1, tick=TRUE, pos = -0.2, lty = 1)
   return(noquote(sum.output))
@@ -278,9 +278,9 @@ categ.sum <- function(x){
     return("Data not categorical!")
   } else{
     length <- apply(x,2, length)
-    class <- apply(x, 2, class)
+    class <- apply(x, 2, class)             #added class for inclusion in function that takes both types of data
     table.sum <- apply(x, 2, table)
-    results <- list(c(length, class, table.sum))
+    results <- list(c(length, class, table.sum))    #storing as list because it can handle things of diff length
     return(results)
   }
 }
