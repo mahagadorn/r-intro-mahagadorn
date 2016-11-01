@@ -248,14 +248,13 @@ replicate.ND
 
 mah.summary <- function(x){
   sum.output <- matrix(NA, nrow = ncol(x), ncol = 5)      #preallocating data matrix
-  sum <- apply(x, 2, sum)
-  mean <- apply(x, 2, mean)
-  std.dev <- apply(x, 2, sd)
-  min <- apply(x, 2, min)
-  max <- apply(x, 2, max)
-  class <- apply(x, 2, class)                               #added class for inclusion in function that takes both types of data
-  sum.output <- cbind(sum, mean, std.dev, min, max, class)  #put everything into data matrix
-  plot <- barplot(mean)
+  sum.output[,1] <- apply(x, 2, sum)
+  sum.output[,2] <- apply(x, 2, mean)
+  sum.output[,3] <- apply(x, 2, sd)
+  sum.output[,4] <- apply(x, 2, min)
+  sum.output[,5] <- apply(x, 2, max)
+  colnames(sum.output) <- c("sum", "mean", "std.dev", "minimum", "maximum")
+  plot <- barplot(sum.output[,"mean"])
   axis(1, tick=TRUE, pos = -0.2, lty = 1)
   return(noquote(sum.output))
 }
@@ -278,7 +277,6 @@ categ.sum <- function(x){
     return("Data not categorical!")
   } else{
     length <- apply(x,2, length)
-    class <- apply(x, 2, class)             #added class for inclusion in function that takes both types of data
     table.sum <- apply(x, 2, table)
     results <- list(c(length, class, table.sum))    #storing as list because it can handle things of diff length
     return(results)
@@ -294,15 +292,14 @@ categ.sum(replicate.ND)   #[1] "Data not categorical!" So the if statment is wor
 #4
 
 summary.stats <- function(x){
-  if(is.numeric(x)){
-    return(mah.summary(x))
-  } else {
-    return(categ.sum(x))
-  }
+  sum_mat <- sapply(Negate(is.numeric)(x))
+  mah.summary(sum_mat)
+  categ.sum(sum_mat)
 }
 
 summary.stats(replicate.ND)
 summary.stats(categorical.mat)
+
 
 
 # 5. A molecular biologist you owe a favour approaches you with a problem. They have a DNA sequence
