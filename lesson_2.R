@@ -397,7 +397,7 @@ PopPlot<- plotPopSize.Fun(a=500, b=95, c=0.1, t=TimeRec)
 TimeRec <- seq(0,100, by =2) 
 
 #this works to differentiate between colors
-plotPopSizeCol.fun <- function(a=a,b,c,t){
+plotPopSizeCol.fun <- function(a,b,c,t){
   colors <- rep("black", length(TimeRec))  #will make it ALWAYS the same length as TimeRec(or time factor)
   pop.growth <- TimeRec
   for(i in 1:length(TimeRec)){
@@ -423,7 +423,29 @@ ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec)
 # purple any y value that’s above a and b. Hint: try putting 3==3 & 2==2 and 3==4 | 2==2 into an if
 # statement and see what you get. Using this construction may make this simpler.
 
-#MAH come back to this
+plotPSMultipleCol.fun <- function(a,b,c,t){
+  colors <- rep("black", length(TimeRec))  
+  pop.growth <- TimeRec
+  for(i in 1:length(TimeRec)){
+    pop.growth <- popsize.fun(a,b,c,t,..)
+    if(pop.growth[i] > a){
+      colors[i] <- "blue"
+    } 
+    if(pop.growth[i] > b){
+      colors[i] <- "red"
+    }
+    if(pop.growth[i] > a & b){
+      colors[i] <- "purple"
+    }
+  }
+  plot(TimeRec, pop.growth,
+       xlab = "Time Recordings (in years)", 
+       ylab = "Population Size (in millions)", 
+       main = "Gompertz Curve: Population Size Changes Over Time",
+       col= colors)
+} 
+
+Mult.col.PS.plot<- plotPSMultipleCol.fun(a=500, b=95, c=0.10, t=TimeRec)
 
 
 #9 Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
@@ -645,13 +667,6 @@ sim.comm <- function(spp.lam, spp.p, spp.names, n.sites){
   colnames(sim.results) <- 1:n.sites
   return(sim.results)
 }
-
-sim.comm(c(3, 5, 7), c(.1, .4, .2), c("dave", "barry", "smith"), 5)
-
-spp.names <- c("O. taurus", "O. pennsylvanicus", "O. hecate", "P. vindex", "B. stercorosus")
-spp.p <- c(1,.5,.5,.5,1)
-spp.lam <- c(23,33,12,4,15)
-n.sites <- 5
 
 sim.comm(c(23,33,12,4,15), c(1,.5,.5,.5,1), c("O. taurus", "O. pennsylvanicus", "O. hecate", "P. vindex", "B. stercorosus"), 5)
 

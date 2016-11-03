@@ -301,6 +301,17 @@ summary.stats(replicate.ND)
 summary.stats(categorical.mat)
 
 
+age <- rep_len((20:23), 10)
+social <- seq(1456, 1465)
+
+
+test.df <- data.frame(sex, year, grade, age, social)
+
+
+
+sum_mat <- sapply(test.df, FUN=Negate(is.numeric)("test.df"))
+
+
 
 # 5. A molecular biologist you owe a favour approaches you with a problem. They have a DNA sequence
 # (e.g., ‘ACGATATACGA’) that they need to group into codons (groups of three) and translate into proteins
