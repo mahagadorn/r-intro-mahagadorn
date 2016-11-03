@@ -427,10 +427,7 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
   colors <- rep("black", length(TimeRec))  
   pop.growth <- TimeRec
   for(i in 1:length(TimeRec)){
-    pop.growth <- popsize.fun(a,b,c,t,..)
-    if(pop.growth[i] > a){
-      colors[i] <- "blue"
-    } 
+    pop.growth <- popsize.fun(a,b,c,t,..) 
     if(pop.growth[i] > b){
       colors[i] <- "red"
     }
@@ -445,7 +442,7 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
-Mult.col.PS.plot<- plotPSMultipleCol.fun(a=400, b=90, c=0.1, t=TimeRec)
+Mult.col.PS.plot<- plotPSMultipleCol.fun(a=500, b=95, c=0.10, t=TimeRec)
 
 
 #9 Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
