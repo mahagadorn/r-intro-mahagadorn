@@ -445,7 +445,7 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
-Mult.col.PS.plot<- plotPSMultipleCol.fun(a=500, b=95, c=0.10, t=TimeRec)
+Mult.col.PS.plot<- plotPSMultipleCol.fun(a=400, b=90, c=0.1, t=TimeRec)
 
 
 #9 Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
