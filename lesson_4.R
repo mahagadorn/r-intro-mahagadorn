@@ -354,7 +354,7 @@ K <- c("AAA", "AAG")
 R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
 STOP <- c("TAA", "TAG", "TAG")
 
-AminoAcids <- list(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N,H, E, D, K, R, STOP)
+AminoAcids <- list(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N, H, E, D, K, R, STOP)
 AminoAcidnumber <- list(c('I', 'L', 'V', 'F', 'M', 'C', 'A', 'G', 'P', 'T', 'S', 'Y', 'W', 'Q', 'N','H', 'E', 'D', 'K', 'R', 'STOP'))
 
 codon.fun <- function(nt.seq){
