@@ -731,7 +731,7 @@ Desert.Walk.Sim(100,5)
 #
 
 
-Doom.Walk.Sim <- function(numb.its, TI, Dist){
+Doom.Walk.Sim <- function(numb.its, TI){
   Time <- 0
   Time <- Time + TI
   xcor <- vector(mode = "numeric", length=numb.its)                            #make a vector of length # of iterations
@@ -753,10 +753,11 @@ Doom.Walk.Sim(100,5,5)
 
 #16
 
-Rubber.Sim <- function(Len.time, TI, Dist){
-  numb.its <- 
+Rubber.Sim <- function(Len.time, TI, alpha){
+  its.hour <- (60/TI)
+  numb.its <- its.hour*Len.time
   Time <- 0
-  Time <- Time + TI
+  Time <- (Time + TI)
   xcor <- vector(mode = "numeric", length=numb.its)                            
   ycor <- vector(mode = "numeric", length=numb.its) 
   for(i in 1:numb.its){
@@ -766,14 +767,12 @@ Rubber.Sim <- function(Len.time, TI, Dist){
     if((distance > 5)){
       return(i*TI)
     }
+    if(time > 24h)
+      return(c("Alpha sufficient"))
   }
-  return(c("Doom not met!"))                                                 
 }                                                 
 
 Doom.Walk.Sim(100,5,5)
-
-
-
 
 
 

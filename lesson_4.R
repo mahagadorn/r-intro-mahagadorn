@@ -311,16 +311,37 @@ test.df <- data.frame(sex, year, grade, age, social)
 
 #writing the summary function
 #DOESN'T AHHHHHHHHHHHH....
+# summary.stats <- function(x){
+#   num.vect <- sapply(x, is.numeric)
+#   num.vect <- subset(x, num.vect)               #  num.vect <- subset(num.vect, is.numeric) this is the wrong way...will tinker
+#   char.vect <- sapply(x, is.character)           #  char.vect <- sapply(x, !is.numeric); sends back invalid argument
+#   char.vect <- subset(x, char.vect)
+#   mah.summary(num.vect)                           #maybe move the ! around to different places??
+#   categ.sum(char.vect)
+# }
+# 
+# summary.stats(test.df)
+
+
 summary.stats <- function(x){
-  num.vect <- sapply(x, is.numeric)
-  num.vect <- subset(x, num.vect)               #  num.vect <- subset(num.vect, is.numeric) this is the wrong way...will tinker
-  char.vect <- sapply(x, is.character)           #  char.vect <- sapply(x, !is.numeric); sends back invalid argument
-  char.vect <- subset(x, char.vect)
-  mah.summary(num.vect)                           #maybe move the ! around to different places??
-  categ.sum(char.vect)
+  not.numeric <- Negate(is.numeric(x))(x)
+  charStats <- mah.summary(x[not.numeric]) 
+  numStats <- categ.sum()
 }
 
-summary.stats(test.df)
+
+x=test.df
+not.numeric <- apply(x, 2, Negate(is.numeric(x))(x))
+
+
+
+
+
+
+
+
+
+
 
 # sum_mat <- apply(test.df, FUN=Negate(is.numeric)("test.df"))  can't get to work!!!!
 
