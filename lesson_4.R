@@ -324,14 +324,16 @@ test.df <- data.frame(sex, year, grade, age, social)
 
 
 summary.stats <- function(x){
-  not.numeric <- Negate(is.numeric(x))(x)
-  charStats <- mah.summary(x[not.numeric]) 
+  numeric <- sapply(x, is.numeric)
+  charStats <- mah.summary(numeric) 
   numStats <- categ.sum()
 }
 
 
+summary.stats(test.df)
+
 x=test.df
-not.numeric <- apply(x, 2, Negate(is.numeric(x))(x))
+not.numeric <- apply(x, 2, (Negate(is.numeric(x))(x)))
 
 
 

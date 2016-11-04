@@ -202,7 +202,7 @@ race.fun(tonks, darwin) #tonks is first cat here....she is lighter; therefore, s
 race.fun(darwin, tonks) #switch it up so that the plump cat is first, to making sure all is working well
 
 #PrintFunction
-print.cat <- function(x,...){
+print.cat <- function(x){
   cat("This", x$color, "colored cat weighs", x$weight, "lbs.", "Good things it's a", x$breed, "breed, people like that kind of cat!\n")
 }
 print.cat(tonks)
@@ -221,7 +221,7 @@ new.point <- function(x, y){
 }
 
 #print.function
-print.point <- function(x,...){
+print.point <- function(x){
   cat("For this point, x = ",x$x,"and y = ",x$y,", are the coordinates.\n")
 }
 
@@ -239,7 +239,7 @@ print.point(point2)
 
 #point method
 
-plot.point <- function(point, first=TRUE,...){
+plot.point <- function(point, first=TRUE){
   if(first)
     plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
@@ -302,7 +302,7 @@ Line5 <- new.line(point4, point6)
 Line6 <- new.line(point5, point6)
 
 #method for plotting the line 
-plot.line <- function(Line, first=TRUE, ...){
+plot.line <- function(Line, first=TRUE){
   if(first)
     plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
@@ -363,7 +363,7 @@ plot.polygon(neg.point1, neg.pount2, point4, point6)
 #I think I already did this above so copy paste
 
 #method for plotting a point; also can see above (Q2)
-plot.point <- function(point, first=TRUE,...){
+plot.point <- function(point, first=TRUE){
   if(first)
     plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
@@ -373,13 +373,13 @@ plot.point <- function(point, first=TRUE,...){
 plot.point(point1)
 
 #pring methods...already above (Q2)
-print.point <- function(x,...){
+print.point <- function(x){
   cat("For this point, x = ",x$x,"and y = ",x$y,", are the coordinates.\n")
 }
 
 
 #method for plotting the line 
-plot.line <- function(Line, first=TRUE, ...){
+plot.line <- function(Line, first=TRUE){
   if(first)
     plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
@@ -478,7 +478,7 @@ new.circle <- function(point, radius){
 
 
 #plottng method for the circle
-plot.circle <- function(circle, first=TRUE, ...){
+plot.circle <- function(circle, first=TRUE){
   circum <- seq(0, 2*(circle$radius * pi), length=10000)
   ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
   xcor <- ((circle$radius *  cos(circum)) + circle$point$y)  
@@ -565,7 +565,7 @@ plot.canvas(pointYAY, Line6, circle1, polygon1)
 
 #generated this in question 8....See text above for details on how it was generated
 
-plot.circle <- function(circle, first=TRUE, ...){
+plot.circle <- function(circle, first=TRUE){
   circum <- seq(0, 2*(circle$radius * pi), length=10000)
   ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
   xcor <- ((circle$radius *  cos(circum)) + circle$point$y)  
@@ -702,5 +702,17 @@ plot.canvas(pointYAY, Line6, circle1, polygon1)
 
 
 
+#13 This way isnt working!!!!
+plot.canvas.col <- function(point, line, circle, polygon, first=TRUE, par){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  point=plot.point(point, first=FALSE, col=color[1])
+  lines=plot.line(line, first=FALSE, col=color[2])
+  lines=plot.circle(circle, first=FALSE, col=color[3])
+  line=plot.polygon(point1=polygon$point1, point2=polygon$point2, point3=polygon$point3, point4=polygon$point4, first=FALSE, col=color[4])
+}
 
+plot.canvas.col(pointYAY, Line6, circle1, polygon1)
+
+color=c("blue", "red", "orange", "purple")
 
