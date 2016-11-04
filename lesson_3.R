@@ -551,30 +551,30 @@ area.circle <- function(radius){
 
 area.method(circle2$radius)
 
-###can't quite figure this one out!
-# area.polygon <- function(point1, point2, point3, point4, n.points){
-#   area <- 0 #preallocate
-#   for(i in (n.points)){
-#     area <- ()
-#   }
-#   
-#   S1 <- dist.method(point1, point2)
-#   S2 <- dist.method(point1, point3)
-#   
-#   
-#   
-#   S3 <- dist.method(point2, point3)
-#   Per <- sum(S1,S2,S3)
-#   Apothem <- 
-#   A <- .5 * Per
-# }
-# 
-# 
-# 
-# 
-# 
-#   Area <- .5 * Per
-# }
+##can't quite figure this one out!
+area.polygon <- function(point1, point2, point3, point4, n.points){
+  area <- 0 #preallocate
+  for(i in (n.points)){
+    area <- ()
+  }
+
+  S1 <- dist.method(point1, point2)
+  S2 <- dist.method(point1, point3)
+
+
+
+  S3 <- dist.method(point2, point3)
+  Per <- sum(S1,S2,S3)
+  Apothem <-
+  A <- .5 * Per
+}
+
+
+
+
+
+  Area <- .5 * Per
+}
 
 
 

@@ -365,8 +365,27 @@ codon.fun <- function(nt.seq){
   # matrixofNTs <- expand.grid(NTs)  #This didnt work
   # matrixofNTs <- expand.grid(NTs, NTs) #okay so what this function does is basically makes all the combinations of the NTs; one more explansion will make it 3 way combo??
   matrixofNTs <- expand.grid(NTs, NTs, NTs)
-
-  colnames(matrixofNTs) <- c("pos 1", "pos 2", "pos 3")
+  #need to apply paste to all rows and collaspe it down, if you do not collaspe then you have 3 separate
+  matrix_NT <- apply(matrixofNTs, 1, paste, collapse='')
+  codons <- cbind(AminoAcids, matrix_NT)
+  match <- match(nt.seq, matrix_NT)
+  
+   
+  
+}
+  
+  
+colnames(matrixofNTs) <- c("pos 1", "pos 2", "pos 3")
+  
+  
+nt.seq <- c("ACGATATACGA")
+  
+  
+  
+  
+  
+  
+  
     for(x in nt.seq){
       for(y in AminoAcids){
         for(z in AminoAcids[[y]]){
