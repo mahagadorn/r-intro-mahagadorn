@@ -384,7 +384,9 @@ plotPopSize.Fun <- function(a,b,c,t){
       main = "Gompertz Curve: Population Size Changes Over Time")
 } 
 
+#Define timerec
 TimeRec <- seq(0,100, by =2)  
+#Apply function
 PopPlot<- plotPopSize.Fun(a=500, b=95, c=0.1, t=TimeRec)
 
 
@@ -413,7 +415,9 @@ plotPopSizeCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
+#Define timerec
 TimeRec <- seq(0,100, by =2)  #same as above just wanted it here incase someone wanted to change it easily
+#apply function
 ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec) 
 
 
@@ -440,6 +444,7 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
+#apply function
 Mult.col.PS.plot<- plotPSMultipleCol.fun(a=450, b=40, c=0.15, t=TimeRec)
 
 
@@ -747,6 +752,37 @@ Doom.Walk.Sim(100,5,5)
 
 
 #16
+
+Rubber.Sim <- function(Len.time, TI, Dist){
+  numb.its <- 
+  Time <- 0
+  Time <- Time + TI
+  xcor <- vector(mode = "numeric", length=numb.its)                            
+  ycor <- vector(mode = "numeric", length=numb.its) 
+  for(i in 1:numb.its){
+    xcor <- xcor + rnorm(1)
+    ycor <- ycor + rnorm(1)
+    distance <- cumsum(sqrt((xcor[length(xcor)])^2 + (ycor[length(ycor)])^2))     
+    if((distance > 5)){
+      return(i*TI)
+    }
+  }
+  return(c("Doom not met!"))                                                 
+}                                                 
+
+Doom.Walk.Sim(100,5,5)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -272,6 +272,7 @@ categorical.mat <- matrix(NA, nrow=10, ncol=3)
 categorical.mat <- cbind(sex, year, grade)
 
 
+
 categ.sum <- function(x){
   if(is.numeric(x)){
     return("Data not categorical!")
@@ -298,19 +299,28 @@ categ.sum(replicate.ND)   #[1] "Data not categorical!" So the if statment is wor
 # }
 #I can't get this to work....keeps telling me that (Negate(is.numeric)(x) is not a function
 
+#combinding vectors to have 2 data types
 
+age <- rep_len((20:23), 10)
+social <- seq(1456, 1465)
+test.df <- data.frame(sex, year, grade, age, social)
+
+
+
+
+
+#writing the summary function
+#DOESN'T AHHHHHHHHHHHH....
 summary.stats <- function(x){
-  if(is.numeric(x)){
-    return(mah.summary(x))
-  } else {
-    return(categ.sum(x))
-  }
+  num.vect <- sapply(x, is.numeric)
+  num.vect <- subset(x, num.vect)               #  num.vect <- subset(num.vect, is.numeric) this is the wrong way...will tinker
+  char.vect <- sapply(x, is.character)           #  char.vect <- sapply(x, !is.numeric); sends back invalid argument
+  char.vect <- subset(x, char.vect)
+  mah.summary(num.vect)                           #maybe move the ! around to different places??
+  categ.sum(char.vect)
 }
 
-
-summary.stats(replicate.ND)
-summary.stats(categorical.mat)
-
+summary.stats(test.df)
 
 # sum_mat <- apply(test.df, FUN=Negate(is.numeric)("test.df"))  can't get to work!!!!
 
@@ -354,13 +364,12 @@ K <- c("AAA", "AAG")
 R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
 STOP <- c("TAA", "TAG", "TGA")
 
-AA <- c("K", "STOP", "E", "Q", "I", "K", "V", "L", "R", "STOP", "G", "R", "T", "S", "")
 
 
 AminoAcids <- c(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N, H, E, D, K, R, STOP)
-AminoAcidnumber <- list(c('I', 'L', 'V', 'F', 'M', 'C', 'A', 'G', 'P', 'T', 'S', 'Y', 'W', 'Q', 'N','H', 'E', 'D', 'K', 'R', 'STOP'))
 
-codon.fun <- function(nt.seq){
+#start function
+codon.fun <- function(nt.seq, AA){
   nt.seq <- sapply(seq(from=1, to=nchar(nt.seq), 3), function(i) substr(nt.seq, i, i+2))   #splits our sequence into lenght=3 aka codon length
   #need to concatenate Nucleotide Bases
   NTs <- c("A","T","G","C")
@@ -370,34 +379,13 @@ codon.fun <- function(nt.seq){
   matrixofNTs <- expand.grid(NTs, NTs, NTs)
   #need to apply paste to all rows and collaspe it down, if you do not collaspe then you have 3 separate
   matrix_NT <- apply(matrixofNTs, 1, paste, collapse='')
-  AA <- cbind()
+  matrix_NT <- cbind(matrix_NT, AminoAcids)
   NT_Match <- match(nt.seq, matrix_NT)
-  paste(matrix_NT[NT_Match])
-  
-   
-  
+  cat(matrix_NT[NT_Match])
 }
-  
-  
-colnames(matrixofNTs) <- c("pos 1", "pos 2", "pos 3")
-  
-  
-nt.seq <- c("ACGATATACGA")
-  
-  
-  
-  
-  
-  
-  
-    for(x in nt.seq){
-      for(y in AminoAcids){
-        for(z in AminoAcids[[y]]){
-          if(AminoAcids[[y]][z]==x){
-            cat(AminoAcidnumber[[y]])
-        }
-      }
-    }
-  }
-}
+
+#saving nt.seq  
+nt.seq <- c("ACGATATACGAT")
+#apply function  
+test <-codon.fun(c("ACGATATACGAT"), AminoAcids)
 

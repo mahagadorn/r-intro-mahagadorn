@@ -225,6 +225,7 @@ print.point <- function(x,...){
   cat("For this point, x = ",x$x,"and y = ",x$y,", are the coordinates.\n")
 }
 
+#define a bunch of points
 point1 <- new.point(1,5)
 point2 <- new.point(6,8)
 point3 <- new.point(4,6)
@@ -250,14 +251,13 @@ plot.point(point1)
 #3) Write a distance method that calculates the distance between two points in space. 
 
 #method
-dist.method <- function(point1, point2, ...){
+dist.method <- function(point1, point2){
   if(!inherits(point1, 'point') | !inherits(point2, 'point'))
     stop(noquote("WARNING: You have not given me two points to work with!!!"))
   xSQ <- (point2$x - point1$x)^2
   ySQ <- (point2$y - point1$y)^2
   Dist <- round(sqrt(xSQ+ySQ), digits=1)
   if(Dist !=0){
-    print(noquote("The distance between the two points is...."))
     return(Dist)
   } 
   print(noquote("Warning: Distance between two points was zero. You should really look into this!\n"))
@@ -293,6 +293,7 @@ new.line <- function(point1, point2){
   return(output)
 }
 
+#define a bunch of lines
 Line1 <- new.line(point1, point2)
 Line2 <- new.line(point1, point3)
 Line3 <- new.line(point2, point3)
@@ -307,13 +308,18 @@ plot.line <- function(Line, first=TRUE, ...){
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
-#Testing this out
+#apply the function to object
 plot.line(Line1)
 plot.line(Line2)
 
+print.line <- function(line){
+  cat("For this line, x1 = ",point1$x,", y1 = ",point1$y, "and x2 = ", point2$x, ", y2 = ", point2$y)
+}
+
+print.line(Line1)
+
 #5 Implement a polygon class that stores a polygon from point objects. Hint: a polygon is really just a
 #  load of lines.
-
 
 new.polygon <- function(point1, point2, point3, point4){
   if(!inherits(point1, 'point') | !inherits(point2, 'point') | !inherits(point3, 'point') | !inherits(point4, 'point')) {
@@ -324,6 +330,7 @@ new.polygon <- function(point1, point2, point3, point4){
   return(output)
 }
 
+#store some points into object polygon
 polygon1 <- new.polygon(point1, point2, point3, point4)
 polygon2 <- new.polygon(point3, point4, point5, point6)
 
@@ -339,11 +346,15 @@ plot.polygon <- function(point1,point2,point3, point4, first=TRUE){
       segments(point4$x, point4$y, point1$x, point1$y)
 } 
 
+#plot with some pre-defined points
 plot.polygon(point1, point2, point3, point4)
 plot.polygon(point4, point2, point5, point6)
-#test to make sure it can go negative
+
+#define 2 new points tp make sure the negative is working
 neg.point1 <- new.point(-15,-10)
 neg.pount2 <- new.point(15, 15)
+
+#apply function to points
 plot.polygon(neg.point1, neg.pount2, point4, point6)
 
 
@@ -351,7 +362,7 @@ plot.polygon(neg.point1, neg.pount2, point4, point6)
 
 #I think I already did this above so copy paste
 
-#method for plotting a point
+#method for plotting a point; also can see above (Q2)
 plot.point <- function(point, first=TRUE,...){
   if(first)
     plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
@@ -361,7 +372,10 @@ plot.point <- function(point, first=TRUE,...){
 #Test
 plot.point(point1)
 
-
+#pring methods...already above (Q2)
+print.point <- function(x,...){
+  cat("For this point, x = ",x$x,"and y = ",x$y,", are the coordinates.\n")
+}
 
 
 #method for plotting the line 
@@ -371,9 +385,15 @@ plot.line <- function(Line, first=TRUE, ...){
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
-#Testing this out
+#Testing this out on some lines
 plot.line(Line1)
 plot.line(Line2)
+
+
+#print method for plot.line (Also See above)
+print.line <- function(line){
+  cat("For this line, x1 = ",point1$x,", y1 = ",point1$y, "and x2 = ", point2$x, ", y2 = ", point2$y)
+}
 
 
 # 7. Write a plot method for a polygon. Hint: if this isn’t trivial, you’re doing something wrong.
@@ -416,11 +436,19 @@ plot.polygon(neg.point1, neg.pount2, point4, point6)
 # the ... gives us the freedom to add additional arguments to our class objects
 
 #Need to write circle class (because we need this to go into canvas object:
+
+
+
+##
+#function for making a new circle class
 new.circle <- function(point, radius){
   output <- list(point=point, radius=radius)
   class(output) <- "circle"
   return(output)
 }
+
+
+
   
 #circle method:
 #equations to keep in mind:     x=radius*cos(circumference); y=r*sin(circumference)
@@ -448,6 +476,8 @@ new.circle <- function(point, radius){
 #so the above didn't move us away from the origin.....so lets add in the x and y coordinates so that it moves to that location
 
 
+
+#plottng method for the circle
 plot.circle <- function(circle, first=TRUE, ...){
   circum <- seq(0, 2*(circle$radius * pi), length=10000)
   ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
@@ -457,15 +487,20 @@ plot.circle <- function(circle, first=TRUE, ...){
     lines(xcor, ycor)
 } 
 
-circle1 <- new.circle(point1, radius=2)   
-plot.circle(circle1)#test it out 
-  
-circle2 <- new.circle(point3, radius=3)  
-plot.circle(circle2)#test it out 
+#make circles
+circle1 <- new.circle(point1, radius=2) 
+circle2 <- new.circle(point3, radius=3)
+
+
+
+#envoke method
+plot.circle(circle1)
+plot.circle(circle2)
 
 
 
 
+#now that we have made the cirle we can include it in the canvas object
 #canvas class
 new.canvas <- function(point, line, circle, polygon){
   if(!inherits(point, 'point')) {
@@ -485,7 +520,10 @@ new.canvas <- function(point, line, circle, polygon){
   return(output)
 }
 
+
+#making canvas object
 canvas1 <- new.canvas(point3, Line4, circle2, polygon2)
+
 
 
 #print.function
@@ -494,17 +532,11 @@ print.canvas <- function(object){
     return(object)
 }
 
+#test print
 print.canvas(canvas1)
 
 
-#assigning multiple inheritence
-
-polygon1 <- new.polygon(point1, point2, point3, point4)
-polygon2 <- new.polygon(point3, point4, point5, point6)
-
-
 #plot function
-
 plot.canvas <- function(point, line, circle, polygon, first=TRUE){
   if(first)
   plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
@@ -514,12 +546,18 @@ plot.canvas <- function(point, line, circle, polygon, first=TRUE){
     line=plot.polygon(point1=polygon$point1, point2=polygon$point2, point3=polygon$point3, point4=polygon$point4,first=FALSE)
 }
 
+#already defined but putting here for ease
 polygon2 <- new.polygon(point3, point4, point5, point6)
 
+#making new point that isnt associated with other objects in the canvas
 pointYAY <- new.point(-15, 0)
 
+#plotting the canvas
 plot.canvas(pointYAY, Line6, circle1, polygon1)
-plot.canvas(point3, Line4, circle1, polygon=c(point1, point2, point3, point4))
+
+
+
+
 
 
 ##9 Implement a circle object that takes a point and a radius and stores a circle. Don’t make a circle out
@@ -536,45 +574,133 @@ plot.circle <- function(circle, first=TRUE, ...){
   lines(xcor, ycor)
 } 
 
-circle1 <- new.circle(point1, radius=2)   
-plot.circle(circle1)#test it out 
+#make circles
+circle1 <- new.circle(point1, radius=2) 
+circle2 <- new.circle(point3, radius=3)
 
-circle2 <- new.circle(point3, radius=3)  
-plot.circle(circle2)#test it out 
+
+
+#envoke method
+plot.circle(circle1)
+plot.circle(circle2)
+
+
+
 
 #10 Write area generic methods for circle and polygon objects.
 
-area.circle <- function(radius){
-    A <- ((radius)^(2)) * pi
-    return(A)
+#Oh, crap I figured this out!!!!! OMG! I just danced around my lab...It's the small victories
+
+#defining a generic method
+
+area <- function(x, ...) UseMethod('area', x)
+area.circle <- function(x, ...) return(((x$radius)^(2)) * pi)
+area.polygon <- function(x, ...) return((dist.method(x$point1, x$point2))^2)      #this is specifically for a square, got Will's approval to do any polygon
+area.default <- function(x, ...) return("Sorry, can't calulate the area!")
+ 
+
+#assign circle class!
+circle1 <- new.circle(point1, radius=2) 
+circle2 <- new.circle(point3, radius=3)
+
+#defining the coordinates of the shape 
+Sq1 <- new.point(0,0)
+Sq2 <- new.point(0,4)
+Sq3 <- new.point(4,4)
+Sq4 <- new.point(4,0)
+
+#assign class & plot
+square <- new.polygon(Sq1, Sq2, Sq3, Sq4)
+plot.polygon(Sq1, Sq2, Sq3, Sq4)
+
+
+#test it out
+area(circle1)
+area(circle2)
+area(square)
+area(Line1)
+
+# > area(circle1)
+# [1] 12.56637
+# > area(circle2)
+# [1] 28.27433
+# > area(square)
+# [1] 16
+# > area(Line1)
+# [1] "Sorry, can't calulate the area"
+
+  
+
+
+
+#11 Add support for circle objects to your canvas.
+
+#This was already done in Question 8 with my original canvas!
+########################
+#####Will you told me to copy and paste my original canvas here so I have, but it is exactly the same as question 8
+
+
+#canvas class containing all requested objects
+new.canvas <- function(point, line, circle, polygon){
+  if(!inherits(point, 'point')) {
+    stop(noquote("Point input not of point class!"))
   }
-
-area.method(circle2$radius)
-
-##can't quite figure this one out!
-area.polygon <- function(point1, point2, point3, point4, n.points){
-  area <- 0 #preallocate
-  for(i in (n.points)){
-    area <- ()
+  if(!inherits(line, 'line')) {
+    stop(noquote("Line input not of line class!"))
   }
-
-  S1 <- dist.method(point1, point2)
-  S2 <- dist.method(point1, point3)
-
-
-
-  S3 <- dist.method(point2, point3)
-  Per <- sum(S1,S2,S3)
-  Apothem <-
-  A <- .5 * Per
+  if(!inherits(circle, 'circle')) {
+    stop(noquote("polygon input not of polygon class!"))
+  }
+  if(!inherits(polygon, 'polygon')) {
+    stop(noquote("polygon input not of polygon class!"))
+  }
+  output <- list(point=point, line=line, circle=circle, polygon=polygon)
+  class(output) <- "canvas.object"
+  return(output)
 }
 
 
+#making canvas object
+canvas1 <- new.canvas(point3, Line4, circle2, polygon2)
 
 
 
-  Area <- .5 * Per
+#print.function
+print.canvas <- function(object){
+  cat("This object is a of class canvas!")
+  return(object)
 }
+
+#test print
+print.canvas(canvas1)
+
+
+#plot function
+plot.canvas <- function(point, line, circle, polygon, first=TRUE){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  point=plot.point(point, first=FALSE)
+  lines=plot.line(line, first=FALSE)
+  lines=plot.circle(circle, first=FALSE)
+  line=plot.polygon(point1=polygon$point1, point2=polygon$point2, point3=polygon$point3, point4=polygon$point4,first=FALSE)
+}
+
+#already defined but putting here for ease
+polygon2 <- new.polygon(point3, point4, point5, point6)
+
+#making new point that isnt associated with other objects in the canvas
+pointYAY <- new.point(-15, 0)
+
+#plotting the canvas
+plot.canvas(pointYAY, Line6, circle1, polygon1)
+
+
+
+
+
+#12 ??? May come back to
+
+
 
 
 
