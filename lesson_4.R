@@ -352,9 +352,12 @@ E <- c("GAA", "GAG")
 D <- c("GAT", "GAC")
 K <- c("AAA", "AAG")
 R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
-STOP <- c("TAA", "TAG", "TAG")
+STOP <- c("TAA", "TAG", "TGA")
 
-AminoAcids <- list(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N, H, E, D, K, R, STOP)
+AA <- c("K", "STOP", "E", "Q", "I", "K", "V", "L", "R", "STOP", "G", "R", "T", "S", "")
+
+
+AminoAcids <- c(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N, H, E, D, K, R, STOP)
 AminoAcidnumber <- list(c('I', 'L', 'V', 'F', 'M', 'C', 'A', 'G', 'P', 'T', 'S', 'Y', 'W', 'Q', 'N','H', 'E', 'D', 'K', 'R', 'STOP'))
 
 codon.fun <- function(nt.seq){
@@ -367,8 +370,9 @@ codon.fun <- function(nt.seq){
   matrixofNTs <- expand.grid(NTs, NTs, NTs)
   #need to apply paste to all rows and collaspe it down, if you do not collaspe then you have 3 separate
   matrix_NT <- apply(matrixofNTs, 1, paste, collapse='')
-  codons <- cbind(AminoAcids, matrix_NT)
-  match <- match(nt.seq, matrix_NT)
+  AA <- cbind()
+  NT_Match <- match(nt.seq, matrix_NT)
+  paste(matrix_NT[NT_Match])
   
    
   
@@ -396,40 +400,4 @@ nt.seq <- c("ACGATATACGA")
     }
   }
 }
-
-
-codon.fun(nt.seq="ACGATATACGAG")
-
-
-
-I <- c("ATT", "ATC", "ATA")
-L <- c("CTT", "CTC", "CTA", "CTG", "TTA", "TTG")
-V <- c("GTT", "GTC", "GTA", "GTG")
-F. <- c("TTT", "TTC")
-M <- c("ATG")
-C <- c("TGT", "TGC")
-A <- c("GCT", "GCC", "GCA", "GCG")
-G <- c("GGT", "GGC", "GGA", "GGG")
-P <- c("CCT", "CCC", "CCA", "CCG")
-T. <- c("ACT", "ACC", "ACA", "ACG")
-S <- c("TCT", "TCC", "TCA", "TCG", "AGT", "AGC")
-Y <- c("TAT", "TAC")
-W <- c("TGG")
-Q <- c("CAA", "CAG")
-N <- c("AAT", "AAC")
-H <- c("CAT", "CAC")
-E <- c("GAA", "GAG")
-D <- c("GAT", "GAC")
-K <- c("AAA", "AAG")
-R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
-STOP <- c("TAA", "TAG", "TAG")
-
-
-
-
-
-
-
-
-
 
