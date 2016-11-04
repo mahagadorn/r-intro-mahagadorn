@@ -511,12 +511,14 @@ plot.canvas <- function(point, line, circle, polygon, first=TRUE){
     point=plot.point(point, first=FALSE)
     lines=plot.line(line, first=FALSE)
     lines=plot.circle(circle, first=FALSE)
-    line=plot.polygon(polygon, first=FALSE)
+    line=plot.polygon(point1=polygon$point1, point2=polygon$point2, point3=polygon$point3, point4=polygon$point4,first=FALSE)
 }
 
 polygon2 <- new.polygon(point3, point4, point5, point6)
 
-plot.canvas(point3, Line4, circle1, polygon2)
+pointYAY <- new.point(-15, 0)
+
+plot.canvas(pointYAY, Line6, circle1, polygon1)
 plot.canvas(point3, Line4, circle1, polygon=c(point1, point2, point3, point4))
 
 
