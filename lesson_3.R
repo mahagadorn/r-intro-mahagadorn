@@ -511,8 +511,10 @@ plot.canvas <- function(point, line, circle, polygon, first=TRUE){
     point=plot.point(point, first=FALSE)
     lines=plot.line(line, first=FALSE)
     lines=plot.circle(circle, first=FALSE)
-    segments=plot.polygon(polygon, first=FALSE)
+    line=plot.polygon(polygon, first=FALSE)
 }
+
+polygon2 <- new.polygon(point3, point4, point5, point6)
 
 plot.canvas(point3, Line4, circle1, polygon2)
 plot.canvas(point3, Line4, circle1, polygon=c(point1, point2, point3, point4))
@@ -523,11 +525,12 @@ plot.canvas(point3, Line4, circle1, polygon=c(point1, point2, point3, point4))
 
 #generated this in question 8....See text above for details on how it was generated
 
-plot.circle <- function(circle){
+plot.circle <- function(circle, first=TRUE, ...){
   circum <- seq(0, 2*(circle$radius * pi), length=10000)
   ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
-  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)
-  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)  
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   lines(xcor, ycor)
 } 
 
@@ -536,7 +539,6 @@ plot.circle(circle1)#test it out
 
 circle2 <- new.circle(point3, radius=3)  
 plot.circle(circle2)#test it out 
-
 
 #10 Write area generic methods for circle and polygon objects.
 
