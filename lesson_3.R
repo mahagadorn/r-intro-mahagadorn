@@ -222,7 +222,7 @@ new.point <- function(x, y){
 
 #print.function
 print.point <- function(x,...){
-  cat("For this point,",x$x,"and",x$y,",are the coordinates.\n")
+  cat("For this point, x = ",x$x,"and y = ",x$y,", are the coordinates.\n")
 }
 
 point1 <- new.point(1,5)
@@ -239,7 +239,7 @@ print.point(point2)
 #point method
 
 plot.point <- function(point,...){
-  plot(point$x, point$y, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+  plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
 }
 
 plot.point(point1)
@@ -300,7 +300,7 @@ Line6 <- new.line(point5, point6)
 
 #method for plotting the line 
 plot.line <- function(Line, ...){
-  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
@@ -315,100 +315,81 @@ plot.line(Line2)
 #  load of lines.
 
 
-new.polygon <- function(Line1, Line2, Line3,...){
-  if(!inherits(Line1, 'line') | !inherits(Line2, 'line') | !inherits(Line3, 'line')) {
+new.polygon <- function(point1, point2, point3, point4){
+  if(!inherits(point1, 'point') | !inherits(point2, 'point') | !inherits(point3, 'point') | !inherits(point4, 'point')) {
     stop(noquote("Something is not right, recheck your classes!!!"))
   }
-  output <- list(Line1=Line1, Line2=Line2, Line3=Line3)
-  class(output) <- "line"
+  output <- list(point1=point1, point2=point2, point3=point3, point4=point4)
+  class(output) <- "polygon"
   return(output)
 }
 
-polygon1 <- new.polygon(Line1, Line2, Line3)
-polygon2 <- new.polygon(Line4, Line5, Line6)
+polygon1 <- new.polygon(point1, point2, point3, point4)
+polygon2 <- new.polygon(point3, point4, point5, point6)
 
 
 
-#method for plotting the line 
-plot.polygon <- function(polygon,...){
-  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
-  segments(polygon$Line1$point1$x, polygon$Line1$point1$y, polygon$Line1$point2$x, polygon$Line1$point2$y)
-  segments(polygon$Line2$point1$x, polygon$Line2$point1$y, polygon$Line2$point2$x, polygon$Line2$point2$y)
-  segments(polygon$Line3$point1$x, polygon$Line3$point1$y, polygon$Line3$point2$x, polygon$Line3$point2$y)
+#method for plotting the polygon FROM POINTS!!!!!!
+plot.polygon <- function(point1,point2,point3, point4){
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+      segments(point1$x, point1$y, point2$x, point2$y)
+      segments(point2$x, point2$y, point3$x, point3$y)
+      segments(point3$x, point3$y, point4$x, point4$y)
+      segments(point4$x, point4$y, point1$x, point1$y)
 } 
 
-plot.polygon(polygon1)
-plot.polygon(polygon2)
+plot.polygon(point1, point2, point3, point4)
+plot.polygon(point4, point2, point5, point6)
+#test to make sure it can go negative
+neg.point1 <- new.point(-15,-10)
+neg.pount2 <- new.point(15, 15)
+plot.polygon(neg.point1, neg.pount2, point4, point6)
 
 
-##################################################################
-##################################################################
-################################################################## MAH FIX THIS
 #6 Write plot methods for point and line objects.
 
 #I think I already did this above so copy paste
 
 #method for plotting a point
-plot.point <- function(pointA, pointB, ...){
-  if(!inherits(pointA, 'point') | !inherits(pointB, 'point')) {
-    stop(noquote("You do not have two things of class point!!!"))
-  } else{
-    plot(NA, xlim=c(0,20), ylim=c(0,20), xlab="x", ylab="y", type = "p")
-    points(pointA$x, pointA$y, pch=7, col="orange")
-    points(pointB$x, pointB$y, pch=7, col="blue")
-  }
+plot.point <- function(point,...){
+  plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
 }
 
-#testing it out
-pointA <- new.point(1, 9)
-pointB <- new.point(4, 3)
-plot.point(pointA, pointB)
+#Test
+plot.point(point1)
+
+
 
 
 #method for plotting a line
-plot.line <- function(start.point, end.point, ...){
-  if(!inherits(start.point, 'line') | !inherits(end.point, 'line')) {
-    stop(noquote("Something is not right, recheck your classes!!!"))
-  } else{
-    plot(NA, xlim=c(0,(end.point$x*(2*(end.point$x)))), ylim=c(0,(end.point$y*(2*(end.point$y)))), xlab="x", ylab="y")
-    segments(start.point$x, start.point$y, end.point$x, end.point$y)
-    points(start.point$x, start.point$y, pch=15, col="red")
-    points(end.point$x, end.point$y, pch=15, col="blue")
-  }
+plot.line <- function(Line, ...){
+  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+  segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
-#Testing it out 
-start.point <- new.line(1, 9)
-end.point <- new.line(4, 3)
-plot.line(start.point, end.point)
+#Testing this out
+plot.line(Line1)
+plot.line(Line2)
 
 
 
 # 7. Write a plot method for a polygon. Hint: if this isn’t trivial, you’re doing something wrong.
 
+#method for plotting the polygon FROM POINTS!!!!!!
+plot.polygon <- function(point1,point2,point3, point4){
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+  segments(point1$x, point1$y, point2$x, point2$y)
+  segments(point2$x, point2$y, point3$x, point3$y)
+  segments(point3$x, point3$y, point4$x, point4$y)
+  segments(point4$x, point4$y, point1$x, point1$y)
+} 
 
-#method for polygon (many) lines
-polygon.lines <- function(Line.W, Line.X, Line.Y, Line.Z, ...){
-  if(!inherits(Line.W, 'Polygon Line') | !inherits(Line.X, 'Polygon Line') | !inherits(Line.Y, 'Polygon Line') | !inherits(Line.Z, 'Polygon Line')) {
-    stop(noquote("Oops, you can't generate a Polygon with those inputs!!!"))
-  } else{
-    plot(NA, xlim=c(0,(Line.Z$x*(2*(Line.Z$x)))), ylim=c(0,(Line.X$y*(2*(Line.X$x)))), xlab="x", ylab="y")
-    segments(Line.W$x, Line.W$y, Line.X$x, Line.X$y, lwd=2)
-    segments(Line.Y$x, Line.Y$y, Line.Z$x, Line.Z$y, lwd=2)
-    segments(Line.W$x, Line.W$y, Line.Z$x, Line.Z$y, lwd=2)
-    segments(Line.X$x, Line.X$y, Line.Y$x, Line.Y$y, lwd=2)
-    points(Line.W$x, Line.W$y, pch=20, col="darkorchid1")
-    points(Line.X$x, Line.X$y, pch=20, col="deepskyblue2")
-    points(Line.Y$x, Line.Y$y, pch=20, col="darkorange")
-    points(Line.Z$x, Line.Z$y, pch=20, col="red")
-  }
-}
-
-Line.W <- Poly.Line(4,9)
-Line.X <- Poly.Line(3,4)
-Line.Y <- Poly.Line(20,4)
-Line.Z <- Poly.Line(5,5)
-polygon.lines(Line.W, Line.X, Line.Y, Line.Z)
+plot.polygon(point1, point2, point3, point4)
+plot.polygon(point4, point2, point5, point6)
+#test to make sure it can go negative
+neg.point1 <- new.point(-15,-10)
+neg.pount2 <- new.point(15, 15)
+plot.polygon(neg.point1, neg.pount2, point4, point6)
 
 
 #8  Create a canvas object that the add function can add point, line, circle, and polygon objects to.
@@ -430,96 +411,155 @@ polygon.lines(Line.W, Line.X, Line.Y, Line.Z)
 #the only extra tidbit needed would be for a circle where we need to include something such as a radius...so I put in the ...
 # the ... gives us the freedom to add additional arguments to our class objects
 
+#Need to write circle class (because we need this to go into canvas object:
+new.circle <- function(point, radius){
+  output <- list(point=point, radius=radius)
+  class(output) <- "circle"
+  return(output)
+}
+  
+#circle method:
+#equations to keep in mind:     x=radius*cos(circumference); y=r*sin(circumference)
+#these equations will have x,y as the coordinates of any point on the circle
+#circumference of the circle is what we want to be plotting so how do we calculate that????
+#circumference is nothing but the path that surrounds the circle
+#can't we just generate a whole bunch of close values that move up in really really small incriments
+    #english version--- we need to multiply something by pi at least
+    #circumference equation is 2 * pi * r
+      #translate to code???? 2*(circle$radius * pi)
+      #seq can be used to generate a sequences of numbers based on a criteria
+      #we want to start the sequence off at zero I think, we can try it and adjust if needed
+      # sooooo, seq(0, 2*(circle$radius *pi), length=some BIG number)
+    #the rest is fill in the blank...i think
 
-canvas.class <- function(x,y,...){
-  output <- list(x=x, y=y, ...=...)
+##############This circle function workds but it only plots it at the origin 0,0
+# plot.circle <- function(circle){
+#   circum <- seq(0, 2*(circle$radius * pi), length=10000)
+#   ycor <- rbind(sin(circum) * circle$radius)             #center of the circle is our point! so subset
+#   xcor <- (circle$radius *  cos(circum))
+#   plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+#   lines(xcor, ycor)
+# } 
+
+#so the above didn't move us away from the origin.....so lets add in the x and y coordinates so that it moves to that location
+
+
+plot.circle <- function(circle){
+  circum <- seq(0, 2*(circle$radius * pi), length=10000)
+  ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
+  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  lines(xcor, ycor)
+} 
+
+circle1 <- new.circle(point1, radius=2)   
+plot.circle(circle1)#test it out 
+  
+circle2 <- new.circle(point3, radius=3)  
+plot.circle(circle2)#test it out 
+
+
+
+
+#canvas class
+new.canvas <- function(point, line, circle, polygon){
+  if(!inherits(point, 'point')) {
+    stop(noquote("Point input not of point class!"))
+  }
+  if(!inherits(line, 'line')) {
+    stop(noquote("Line input not of line class!"))
+  }
+  if(!inherits(circle, 'circle')) {
+    stop(noquote("polygon input not of polygon class!"))
+  }
+  if(!inherits(polygon, 'polygon')) {
+    stop(noquote("polygon input not of polygon class!"))
+  }
+  output <- list(point=point, line=line, circle=circle, polygon=polygon)
   class(output) <- "canvas.object"
   return(output)
 }
 
-
-circleA.test <- canvas.class(x=1,y=1,r=.25)
-polylineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
+canvas1 <- new.canvas(point3, Line4, circle2, polygon2)
 
 
 #print.function
-print.canvas <- function(objects.cors,...){
-  if(length(objects.cors) < 2){
-    cat("Please recheck your input.")
-  }
-  if(length(objects.cors) == 2){
-    cat("For this object, x = ",objects.cors$x,"and y = ",objects.cors$y,",are the coordinates.\n")  
-  }
-  if(length(objects.cors) == 3){
-    cat("For this circle, x = ",objects.cors$x,", y = ", objects.cors$y,"and r = ", objects.cors$r,"are the coordinates.\n")
-  }
-  if(length(objects.cors) == 4){
-    cat("For this line, x1 =" ,objects.cors$x, ", y1 =", objects.cors$y, "and x2 =", objects.cors$x2, ", y2 =" , objects.cors$y2, "are the coordinates.\n")
-    }else{
-      xcor<- c(objects.cors$x, objects.cors$x2, objects.cors$x3, objects.cors$x4)
-      ycor <- c(objects.cors$y, objects.cors$y2, objects.cors$y3, objects.cors$y4)
-      d.f. <- data.frame( xcor, ycor, row.names = c("Point 1", "Point 2", "Point 3", "Point 4"))
-      print(d.f.)
-  }
+print.canvas <- function(object){
+    cat("This object is a of class canvas!")
+    return(object)
 }
+
+print.canvas(canvas1)
+
 
 #assigning multiple inheritence
 
-lineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
-print.canvas(polylineA.test)
-
-MultInher.tex <- c(x=1, y=1, x2=2, y2=2)
-class(MultInher.tex) <- c("line", "canvas.object")  #assigned to two classes! #trying to do this so I can use plot
-
-
-
-circleA.test <- canvas.class(x=1,y=1,r=.25)
-print.canvas(circleA.test)
-
-lineA.test <- canvas.class(x=1, y=1, x2=2, y2=2)
-print.canvas(polylineA.test)
-
-Polylines.test <- canvas.class(x=1, y=1, x2=2, y2=2, x3=3, y3=3, x4=4, y4=4)
-print.canvas(Polylines.test)
-
-Line.W <- Poly.Line(4,9)
-Line.X <- Poly.Line(3,4)
-Line.Y <- Poly.Line(20,4)
-Line.Z <- Poly.Line(5,5)
-
 #plot function
 
-plot.canvas <- function(objects.cors,...){
-  if(length(objects.cors) == 4){
-    if(!inherits(start.point, 'line') | !inherits(end.point, 'line'))
-    plot.line(Obj.line.point1, Obj.line.point2)
-    }
+plot.canvas <- function(point, line, circle, polygon){
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  point=plot.point(point)
+  lines=plot.line(line)
+  lines=plot.circle(circle)
+  lines=plot.polygon(polygon)
+}
+
+plot.canvas(canvas1)
+
+
+##9 Implement a circle object that takes a point and a radius and stores a circle. Don’t make a circle out
+#of lines!
+
+#generated this in question 8....See text above for details on how it was generated
+
+plot.circle <- function(circle){
+  circum <- seq(0, 2*(circle$radius * pi), length=10000)
+  ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
+  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)
+  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
+  lines(xcor, ycor)
+} 
+
+circle1 <- new.circle(point1, radius=2)   
+plot.circle(circle1)#test it out 
+
+circle2 <- new.circle(point3, radius=3)  
+plot.circle(circle2)#test it out 
+
+
+#10 Write area generic methods for circle and polygon objects.
+
+area.circle <- function(radius){
+    A <- ((radius)^(2)) * pi
+    return(A)
+  }
+
+area.method(circle2$radius)
+
+###can't quite figure this one out!
+area.polygon <- function(point1, point2, point3, point4, n.points){
+  area <- 0 #preallocate
+  for(i in (n.points)){
+    area <- ()
   }
   
-
-Obj.line.point1 <- canvas.class(5,4)
-class(Obj.line.point1) <- c("line", "canvas.object")
-Obj.line.point2 <- canvas.class(8,5)
-class(Obj.line.point2) <- c("line", "canvas.object")
-
-plot.canvas(Obj.line.point1, Obj.line.point2)
- 
-plot.canvas(Obj.line.point1)  
+  S1 <- dist.method(point1, point2)
+  S2 <- dist.method(point1, point3)
   
   
   
-  
+  S3 <- dist.method(point2, point3)
+  Per <- sum(S1,S2,S3)
+  Apothem <- 
+  A <- .5 * Per
 }
 
 
-Line.W <- Poly.Line(4,9)
-Line.X <- Poly.Line(3,4)
-Line.Y <- Poly.Line(20,4)
-Line.Z <- Poly.Line(5,5)
 
 
-xcor<- c(Line.W$x, Line.X$x, Line.Y$x, Line.Z$x)
-ycor <- c(Line.W$y, Line.X$y, Line.Y$y, Line.Z$y)
-d.f. <- data.frame( xcor, ycor, row.names = c("Line W", "Line X", "Line Y", "Line Z"))
+
+  Area <- .5 * Per
+}
+
 
 

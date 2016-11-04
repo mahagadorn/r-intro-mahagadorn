@@ -291,25 +291,28 @@ categ.sum(replicate.ND)   #[1] "Data not categorical!" So the if statment is wor
 
 #4
 
+# summary.stats <- function(x){
+#   sum_mat <- sapply(Negate(is.numeric)(x))
+#   mah.summary(sum_mat)
+#   categ.sum(sum_mat)
+# }
+#I can't get this to work....keeps telling me that (Negate(is.numeric)(x) is not a function
+
+
 summary.stats <- function(x){
-  sum_mat <- sapply(Negate(is.numeric)(x))
-  mah.summary(sum_mat)
-  categ.sum(sum_mat)
+  if(is.numeric(x)){
+    return(mah.summary(x))
+  } else {
+    return(categ.sum(x))
+  }
 }
+
 
 summary.stats(replicate.ND)
 summary.stats(categorical.mat)
 
 
-age <- rep_len((20:23), 10)
-social <- seq(1456, 1465)
-
-
-test.df <- data.frame(sex, year, grade, age, social)
-
-
-
-sum_mat <- sapply(test.df, FUN=Negate(is.numeric)("test.df"))
+# sum_mat <- apply(test.df, FUN=Negate(is.numeric)("test.df"))  can't get to work!!!!
 
 
 
@@ -324,16 +327,83 @@ sum_mat <- sapply(test.df, FUN=Negate(is.numeric)("test.df"))
 # Create a data frame from all combinations of the supplied vectors or factors. See the description of the return 
 # value for precise details of the way this is done.
 # we need expand.grid will help make a lookup table
-
-
-codon.fun <- function(nt.seq, )
-
+#should be able to apply this to ATGC?
 
 
 
+#got alot of help on this one from Alex Rego.  This help was documented on GitHub.
+I <- c("ATT", "ATC", "ATA")
+L <- c("CTT", "CTC", "CTA", "CTG", "TTA", "TTG")
+V <- c("GTT", "GTC", "GTA", "GTG")
+F. <- c("TTT", "TTC")
+M <- c("ATG")
+C <- c("TGT", "TGC")
+A <- c("GCT", "GCC", "GCA", "GCG")
+G <- c("GGT", "GGC", "GGA", "GGG")
+P <- c("CCT", "CCC", "CCA", "CCG")
+T. <- c("ACT", "ACC", "ACA", "ACG")
+S <- c("TCT", "TCC", "TCA", "TCG", "AGT", "AGC")
+Y <- c("TAT", "TAC")
+W <- c("TGG")
+Q <- c("CAA", "CAG")
+N <- c("AAT", "AAC")
+H <- c("CAT", "CAC")
+E <- c("GAA", "GAG")
+D <- c("GAT", "GAC")
+K <- c("AAA", "AAG")
+R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
+STOP <- c("TAA", "TAG", "TAG")
+
+AminoAcids <- list(I, L, V, F., M, C, A, G, P, T., S, Y, W, Q, N,H, E, D, K, R, STOP)
+AminoAcidnumber <- list(c('I', 'L', 'V', 'F', 'M', 'C', 'A', 'G', 'P', 'T', 'S', 'Y', 'W', 'Q', 'N','H', 'E', 'D', 'K', 'R', 'STOP'))
+
+codon.fun <- function(nt.seq){
+  nt.seq <- sapply(seq(from=1, to=nchar(nt.seq), 3), function(i) substr(nt.seq, i, i+2))   #splits our sequence into lenght=3 aka codon length
+  #need to concatenate Nucleotide Bases
+  NTs <- c("A","T","G","C")
+  #Function of expand grid explained above
+  # matrixofNTs <- expand.grid(NTs)  #This didnt work
+  # matrixofNTs <- expand.grid(NTs, NTs) #okay so what this function does is basically makes all the combinations of the NTs; one more explansion will make it 3 way combo??
+  matrixofNTs <- expand.grid(NTs, NTs, NTs)
+
+  colnames(matrixofNTs) <- c("pos 1", "pos 2", "pos 3")
+    for(x in nt.seq){
+      for(y in AminoAcids){
+        for(z in AminoAcids[[y]]){
+          if(AminoAcids[[y]][z]==x){
+            cat(AminoAcidnumber[[y]])
+        }
+      }
+    }
+  }
+}
+
+
+codon.fun(nt.seq="ACGATATACGAG")
 
 
 
+I <- c("ATT", "ATC", "ATA")
+L <- c("CTT", "CTC", "CTA", "CTG", "TTA", "TTG")
+V <- c("GTT", "GTC", "GTA", "GTG")
+F. <- c("TTT", "TTC")
+M <- c("ATG")
+C <- c("TGT", "TGC")
+A <- c("GCT", "GCC", "GCA", "GCG")
+G <- c("GGT", "GGC", "GGA", "GGG")
+P <- c("CCT", "CCC", "CCA", "CCG")
+T. <- c("ACT", "ACC", "ACA", "ACG")
+S <- c("TCT", "TCC", "TCA", "TCG", "AGT", "AGC")
+Y <- c("TAT", "TAC")
+W <- c("TGG")
+Q <- c("CAA", "CAG")
+N <- c("AAT", "AAC")
+H <- c("CAT", "CAC")
+E <- c("GAA", "GAG")
+D <- c("GAT", "GAC")
+K <- c("AAA", "AAG")
+R <- c("CGT", "CGC", "CGA", "CGG", "AGA", "AGG")
+STOP <- c("TAA", "TAG", "TAG")
 
 
 

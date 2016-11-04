@@ -360,27 +360,23 @@ for(i in 1:20){
 #startloop(input the equation here: translated--y(of time) equal to a times exponential function containing -b times exponential function containing -c times time factor)
 #equation would look like this (y(t) <- a*exp(-b*exp(-c*t)))
 #}
-popsize.fun <- function(a,b,c,t,...){ #these are our arguments
+popsize.fun <- function(a,b,c,t){ #these are our arguments
   psize=a*exp(-b*(exp(-c*t)))    #e is exponential = exp() 
     return(psize)
 }
 
-PS.ex1 <- popsize.fun(a=1,b=2,c=3,t=50) #example for random numbers
-print(PS.ex1) #[1] 1
+popsize.fun(a=1,b=2,c=3,t=50) #example for random numbers  #[1] 1
 
-PS.ex2 <- popsize.fun(a=10,b=5,c=11,t=100)  #changing numbers to make sure it works
-print(PS.ex2) #[1] 10
+popsize.fun(a=10,b=5,c=11,t=100)  #changing numbers to make sure it works  #[1] 10
 
 
 #6) The biologist likes your function so much they want you to write another function that plots the progress
 #of the population over a given length of time. Write it for them.
 
-TimeRec <- seq(0,100, by =4)  
-
 #function
-plotPopSize.Fun <- function(a,b,c,t,...){
+plotPopSize.Fun <- function(a,b,c,t){
     for(i in 1:length(TimeRec)){
-      pop.growth <- popsize.fun(a,b,c,t,..)
+      pop.growth <- popsize.fun(a,b,c,t)
     }
     plot(TimeRec, pop.growth,
       xlab = "Time Recordings (in years)", 
@@ -388,20 +384,21 @@ plotPopSize.Fun <- function(a,b,c,t,...){
       main = "Gompertz Curve: Population Size Changes Over Time")
 } 
 
-PopPlot<- plotPopSize.Fun(a=500, b=95, c=0.1, t=TimeRec) 
+TimeRec <- seq(0,100, by =2)  
+PopPlot<- plotPopSize.Fun(a=500, b=95, c=0.1, t=TimeRec)
+
+
 
 
 #7) #The biologist has fallen in love with your plotting function, but want to colour y values above a as blue,
 #and y values above b as red. Change your function to allow that.
-
-TimeRec <- seq(0,100, by =2) 
 
 #this works to differentiate between colors
 plotPopSizeCol.fun <- function(a,b,c,t){
   colors <- rep("black", length(TimeRec))  #will make it ALWAYS the same length as TimeRec(or time factor)
   pop.growth <- TimeRec
   for(i in 1:length(TimeRec)){
-    pop.growth <- popsize.fun(a,b,c,t,..)
+    pop.growth <- popsize.fun(a,b,c,t)
       if(pop.growth[i] > a){
           colors[i] <- "blue"
       } 
@@ -416,6 +413,7 @@ plotPopSizeCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
+TimeRec <- seq(0,100, by =2)  #same as above just wanted it here incase someone wanted to change it easily
 ColPlotPopSize<- plotPopSizeCol.fun(a=500, b=95, c=0.10, t=TimeRec) 
 
 
@@ -427,11 +425,11 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
   colors <- rep("black", length(TimeRec))  
   pop.growth <- TimeRec
   for(i in 1:length(TimeRec)){
-    pop.growth <- popsize.fun(a,b,c,t,..) 
+    pop.growth <- popsize.fun(a,b,c,t) 
     if(pop.growth[i] > b){
       colors[i] <- "red"
     }
-    if(pop.growth[i] > a & b){
+    if(pop.growth[i] > a & pop.growth[i] > b){
       colors[i] <- "purple"
     }
   }
@@ -442,7 +440,7 @@ plotPSMultipleCol.fun <- function(a,b,c,t){
        col= colors)
 } 
 
-Mult.col.PS.plot<- plotPSMultipleCol.fun(a=500, b=95, c=0.10, t=TimeRec)
+Mult.col.PS.plot<- plotPSMultipleCol.fun(a=450, b=40, c=0.15, t=TimeRec)
 
 
 #9 Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
@@ -450,7 +448,7 @@ Mult.col.PS.plot<- plotPSMultipleCol.fun(a=500, b=95, c=0.10, t=TimeRec)
   # *   *
   # *****
 
-#rect() function??? no because I can't make it with astericks
+#rect() function??? updated: no because I can't make it with astericks!
 
 
 #function
@@ -519,7 +517,7 @@ TextBox <- function(width, height, text){
 }
 
 
-TextBox(23, 13, text="Keep Calm, Code On!")
+TextBox(23, 13, text="Keep Calm, Codon!")  #Will, hope you enjoyed the pun!
 
 
 #11
@@ -634,8 +632,7 @@ Abd.Sp.Sim(prob = 0.5, n=5, lambda = 20)
 #so this is asking if our probability of finding a species is .5 or that we find it 50% and the average abundance of the species when its present is 20
 #then at five sites we will find it in abundances of :   [1] 18 17 25  7 16 (these represent the individual sites)
 
-
-Abd.Sp.Sim(prob = 1, n=5, lambda = 20)
+Abd.Sp.Sim(prob = 0.5, n=5, lambda = 20)
 #would we every truly have a probability of one? I don't think so, but test this anyway
 #[1] 24 21 20 22 21
 
@@ -687,21 +684,18 @@ sim.comm(c(23,33,12,4,15), c(1,.5,.5,.5,1), c("O. taurus", "O. pennsylvanicus", 
 #simulate process
 #plot it
 
-
-#NEED TO ASK WILL ABOUT THIS? I DONT THINK IT SHOULD BE A STRAIGHT LINE BUT WILL ASK
-
 Desert.Walk.Sim <- function(num.its, TI){
-  Time <- trunc(seq((0), to=(num.its*TI), by=((num.its*TI)/(num.its))))     #this works 0 to 500-->if you need to ajust to 5:500 5=TI
+  Time <- trunc(seq((0), to=(num.its*TI), by=TI))     #this works 0 to 500-->if you need to ajust to 5:500 5=TI
   xcor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
   xcor <- c(0, xcor)                                                        #added a zero here to make an origin
   ycor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
   ycor <- c(0, ycor)                                                        #again origin
-  coor.bytime <- cbind(Time,xcor,ycor)                                     #generate a matrix HINT the <<- instead of <- saves it to the global environment 
+  coor.bytime <- cbind(Time,xcor,ycor)                                      #generate a matrix HINT the <<- instead of <- saves it to the global environment 
   sum.xcor <- cumsum(xcor)
   sum.ycor <- cumsum(ycor)
   for (i in Time) {
-    Last.sumxcor <- lastnumber<-tail((sum.xcor), n=1)
-    Last.sumycor <- lastnumber<-tail((sum.ycor), n=1)
+    Last.sumxcor <- tail((sum.xcor), n=1)
+    Last.sumycor <- tail((sum.ycor), n=1)
   }  
     DistancePlot <- plot(sum.xcor,sum.ycor, type = "l", lty=2,     ####Take it out of the for loop
                          xlab = "Longitude Coordinate",
@@ -709,13 +703,56 @@ Desert.Walk.Sim <- function(num.its, TI){
                          main = "Similated Path for Lost Collegue")
     points(0,0, col="darkorchid1", pch=15, cex=1.25)                      #points is awesome...it adds them after the fact.
     points(Last.sumxcor, Last.sumycor, col="blue", pch=17, cex=1.25)
-    return(coor.bytime)
+    return(coor.bytime)                                                   #So he can have all the coordinates
 }
 
 
 Desert.Walk.Sim(100,5)
 #tried to add this in and couldnt get it to work.....
 #legend="topright", legend=c("Starting Point", "End Point"), pch=c(15,17), col= c("darkorchid1", "blue"))
+
+
+#15
+
+# Professor Savitzky is deeply concerned to realise that the member of faculty was, in fact, at the top of
+# a steep mountain in the fog. Approximately 5 miles away, in all directions, from the faculty member’s
+# starting point is a deadly cliff! He asks if you could run your simulation to see how long, on average,
+# until the faculty member plummets to their doom.
+
+
+#What do we want to do here---we want to basically make a boundary "mountain top" that the professor is going to fall off of
+#we want to calculate how long it is going to take the professor to fall off this mountain top
+#mountrain top is 5 miles in all directions
+#
+
+Doom.Walk.Sim <- function(num.its, Dist ){
+  Time <- trunc(seq((0), to=(num.its*TI), by=((num.its*TI)/(num.its))))     #this works 0 to 500-->if you need to ajust to 5:500 5=TI
+  xcor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
+  xcor <- c(0, xcor)                                                        #added a zero here to make an origin
+  ycor <- round(rnorm(num.its), digits = 2)                                 #generates 100 random numbers along a normal distribution
+  ycor <- c(0, ycor)                                                        #again origin
+  coor.bytime <- cbind(Time,xcor,ycor)                                      #generate a matrix HINT the <<- instead of <- saves it to the global environment 
+  sum.xcor <- cumsum(xcor)
+  sum.ycor <- cumsum(ycor)
+  for (i in Time) {
+    Last.sumxcor <- lastnumber<-tail((sum.xcor), n=1)
+    Last.sumycor <- lastnumber<-tail((sum.ycor), n=1)
+  }  
+  DistancePlot <- plot(sum.xcor,sum.ycor, type = "l", lty=2,     ####Take it out of the for loop
+                       xlab = "Longitude Coordinate",
+                       ylab = "Latitude Coordinate",
+                       main = "Similated Path for Lost Collegue")
+  points(0,0, col="darkorchid1", pch=15, cex=1.25)                      #points is awesome...it adds them after the fact.
+  points(Last.sumxcor, Last.sumycor, col="blue", pch=17, cex=1.25)
+  return(coor.bytime)                                                   #So he can have all the coordinates
+}
+
+
+
+
+
+
+
 
 
 
