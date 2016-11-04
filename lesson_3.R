@@ -238,7 +238,9 @@ print.point(point2)
 
 #point method
 
-plot.point <- function(point,...){
+plot.point <- function(point, first=TRUE,...){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
 }
 
@@ -299,17 +301,15 @@ Line5 <- new.line(point4, point6)
 Line6 <- new.line(point5, point6)
 
 #method for plotting the line 
-plot.line <- function(Line, ...){
-  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+plot.line <- function(Line, first=TRUE, ...){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
 #Testing this out
 plot.line(Line1)
 plot.line(Line2)
-
-
-
 
 #5 Implement a polygon class that stores a polygon from point objects. Hint: a polygon is really just a
 #  load of lines.
@@ -330,8 +330,9 @@ polygon2 <- new.polygon(point3, point4, point5, point6)
 
 
 #method for plotting the polygon FROM POINTS!!!!!!
-plot.polygon <- function(point1,point2,point3, point4){
-  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+plot.polygon <- function(point1,point2,point3, point4, first=TRUE){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
       segments(point1$x, point1$y, point2$x, point2$y)
       segments(point2$x, point2$y, point3$x, point3$y)
       segments(point3$x, point3$y, point4$x, point4$y)
@@ -351,7 +352,9 @@ plot.polygon(neg.point1, neg.pount2, point4, point6)
 #I think I already did this above so copy paste
 
 #method for plotting a point
-plot.point <- function(point,...){
+plot.point <- function(point, first=TRUE,...){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   plot(point$x, point$y, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
 }
 
@@ -361,9 +364,10 @@ plot.point(point1)
 
 
 
-#method for plotting a line
-plot.line <- function(Line, ...){
-  plot(NA, xlim=c(0, 20), ylim=c(0, 20), xlab="x", ylab="y")
+#method for plotting the line 
+plot.line <- function(Line, first=TRUE, ...){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(Line$point1$x, Line$point1$y, Line$point2$x, Line$point2$y)
 }
 
@@ -372,12 +376,12 @@ plot.line(Line1)
 plot.line(Line2)
 
 
-
 # 7. Write a plot method for a polygon. Hint: if this isn’t trivial, you’re doing something wrong.
 
 #method for plotting the polygon FROM POINTS!!!!!!
-plot.polygon <- function(point1,point2,point3, point4){
-  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+plot.polygon <- function(point1, point2, point3, point4, first=TRUE){
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
   segments(point1$x, point1$y, point2$x, point2$y)
   segments(point2$x, point2$y, point3$x, point3$y)
   segments(point3$x, point3$y, point4$x, point4$y)
@@ -444,12 +448,13 @@ new.circle <- function(point, radius){
 #so the above didn't move us away from the origin.....so lets add in the x and y coordinates so that it moves to that location
 
 
-plot.circle <- function(circle){
+plot.circle <- function(circle, first=TRUE, ...){
   circum <- seq(0, 2*(circle$radius * pi), length=10000)
   ycor <- rbind((sin(circum) * circle$radius) + circle$point$x)             
-  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)
-  plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
-  lines(xcor, ycor)
+  xcor <- ((circle$radius *  cos(circum)) + circle$point$y)  
+  if(first)
+    plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y")
+    lines(xcor, ycor)
 } 
 
 circle1 <- new.circle(point1, radius=2)   
@@ -494,17 +499,23 @@ print.canvas(canvas1)
 
 #assigning multiple inheritence
 
+polygon1 <- new.polygon(point1, point2, point3, point4)
+polygon2 <- new.polygon(point3, point4, point5, point6)
+
+
 #plot function
 
-plot.canvas <- function(point, line, circle, polygon){
+plot.canvas <- function(point, line, circle, polygon, first=TRUE){
+  if(first)
   plot(NA, xlim=c(-20, 20), ylim=c(-20, 20), xlab="x", ylab="y", type="l")
-  point=plot.point(point)
-  lines=plot.line(line)
-  lines=plot.circle(circle)
-  lines=plot.polygon(polygon)
+    point=plot.point(point, first=FALSE)
+    lines=plot.line(line, first=FALSE)
+    lines=plot.circle(circle, first=FALSE)
+    segments=plot.polygon(polygon, first=FALSE)
 }
 
-plot.canvas(canvas1)
+plot.canvas(point3, Line4, circle1, polygon2)
+plot.canvas(point3, Line4, circle1, polygon=c(point1, point2, point3, point4))
 
 
 ##9 Implement a circle object that takes a point and a radius and stores a circle. Don’t make a circle out
@@ -537,29 +548,29 @@ area.circle <- function(radius){
 area.method(circle2$radius)
 
 ###can't quite figure this one out!
-area.polygon <- function(point1, point2, point3, point4, n.points){
-  area <- 0 #preallocate
-  for(i in (n.points)){
-    area <- ()
-  }
-  
-  S1 <- dist.method(point1, point2)
-  S2 <- dist.method(point1, point3)
-  
-  
-  
-  S3 <- dist.method(point2, point3)
-  Per <- sum(S1,S2,S3)
-  Apothem <- 
-  A <- .5 * Per
-}
-
-
-
-
-
-  Area <- .5 * Per
-}
+# area.polygon <- function(point1, point2, point3, point4, n.points){
+#   area <- 0 #preallocate
+#   for(i in (n.points)){
+#     area <- ()
+#   }
+#   
+#   S1 <- dist.method(point1, point2)
+#   S2 <- dist.method(point1, point3)
+#   
+#   
+#   
+#   S3 <- dist.method(point2, point3)
+#   Per <- sum(S1,S2,S3)
+#   Apothem <- 
+#   A <- .5 * Per
+# }
+# 
+# 
+# 
+# 
+# 
+#   Area <- .5 * Per
+# }
 
 
 
